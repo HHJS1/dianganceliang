@@ -1,0 +1,27 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+#include <iom16v.h>  // ICC AVR使用iom16.h而不是avr/io.h
+#include <macros.h>  // ICC AVR中的宏定义
+#include <stdio.h>
+
+// 数据包结构
+typedef struct {
+    unsigned char header;     // 帧头 0x55
+    unsigned char adc0;       // ADC通道0数据
+    unsigned char adc1;       // ADC通道1数据
+    unsigned char adc2;       // ADC通道2数据
+    unsigned char adc3;       // ADC通道3数据
+    unsigned char footer;     // 帧尾 0xFF
+} DataPacket;
+
+// 函数声明
+void System_Init(void);
+void Process_ADC_Data(void);
+void Send_Data_Packet(void);
+
+// 全局变量
+extern volatile unsigned int ADC_Values[4];
+extern volatile unsigned char ADC_Ready;
+
+#endif /* MAIN_H */

@@ -1,0 +1,1 @@
+adc.o main.o uart.o keys.o 

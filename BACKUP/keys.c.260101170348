@@ -1,0 +1,140 @@
+#include "keys.h"
+#include "main.h"
+#include "adc.h"
+
+// 内部变量
+static unsigned char key_open_debounce = 0;
+static unsigned char key_short_debounce = 0;
+static unsigned char key_clear_debounce = 0;
+extern volatile unsigned int ADC_Values_0[4] ;
+unsigned int sum[4]={0};
+unsigned char i = 0;
+// 按键初始化
+void Keys_Init(void) {
+    // 设置PD2, PD3为输入（外接上拉电阻）
+    DDRD &= ~((1 << KEY_OPEN) | (1 << KEY_SHORT));
+    
+    // 设置PC4为输入（外接上拉电阻）
+    DDRC &= ~(1 << KEY_CLEAR);
+    
+    // 如果需要，可以启用内部上拉（如果外接上拉电阻，可以不启用）
+    // PORTD |= (1 << KEY_OPEN) | (1 << KEY_SHORT);
+    // PORTC |= (1 << KEY_CLEAR);
+}
+
+// 按键扫描函数
+void Keys_Scan(void) {
+    static unsigned char key_open_last = 1;
+    static unsigned char key_short_last = 1;
+    static unsigned char key_start_last = 1;
+    unsigned char key_open_current, key_short_current, key_start_current;
+    
+    // 读取当前按键状态（按键按下为0，释放为1）
+    key_open_current = (PIND & (1 << KEY_OPEN)) ? 1 : 0;
+    key_short_current = (PIND & (1 << KEY_SHORT)) ? 1 : 0;
+    key_start_current = (PINC & (1 << KEY_CLEAR)) ? 1 : 0;
+    
+    // D2按键处理（开路检测）
+    if(key_open_current == 0 && key_open_last == 1) {  // 下降沿检测
+        if(key_open_debounce == 0) {
+            key_open_debounce = 10;  // 启动消抖计时
+        }
+    }
+    
+    if(key_open_debounce > 0) {
+        key_open_debounce--;
+        if(key_open_debounce == 0) {
+            // 再次检测按键状态，确认按下
+            if((PIND & (1 << KEY_OPEN)) == 0) {
+                // 执行开路检测
+				/*
+                ADC_Values_0[0]=ADC_ReadChannel(0);
+				ADC_Values_0[1]=ADC_ReadChannel(1);
+				
+                Key_Flags |= FLAG_OPEN_TEST;
+				*/
+				for( i = 0; i < 2; i++) {
+    					sum[0] += ADC_ReadChannel(0);  // 通道0
+    					sum[1] += ADC_ReadChannel(1);  // 通道1
+    					sum[2] += ADC_ReadChannel(2);  // 通道2
+    					sum[3] += ADC_ReadChannel(3);  // 通道3
+				}
+				
+				// 计算平均值
+					ADC_Values[0] = sum[0];  // 通道0平均值
+					ADC_Values[1] = sum[1];  // 通道1平均值
+					ADC_Values[2] = sum[2];  // 通道2平均值
+					ADC_Values[3] = sum[3];  // 通道3平均值
+            }
+        }
+    }
+    
+    // D3按键处理（短路检测）
+    if(key_short_current == 0 && key_short_last == 1) {  // 下降沿检测
+        if(key_short_debounce == 0) {
+            key_short_debounce = 10;  // 启动消抖计时
+        }
+    }
+    
+    if(key_short_debounce > 0) {
+        key_short_debounce--;
+        if(key_short_debounce == 0) {
+            // 再次检测按键状态，确认按下
+            if((PIND & (1 << KEY_SHORT)) == 0) {
+                // 执行短路检测
+                ADC_Values_0[2]=ADC_ReadChannel(2);
+				ADC_Values_0[3]=ADC_ReadChannel(3);
+                Key_Flags |= FLAG_SHORT_TEST;
+            }
+        }
+    }
+    
+    // C4按键处理
+    if(key_start_current == 0 && key_start_last == 1) {  // 下降沿检测
+        if(key_clear_debounce == 0) {
+            key_clear_debounce = 10;  // 启动消抖计时
+        }
+    }
+    
+    if(key_clear_debounce > 0) {
+        key_clear_debounce--;
+        if(key_clear_debounce == 0) {
+            // 再次检测按键状态，确认按下
+            if((PINC & (1 << KEY_CLEAR)) == 0) {
+                ADC_Values_0[2]=ADC_ReadChannel(2);
+				ADC_Values_0[3]=ADC_ReadChannel(3);
+                //Key_Flags |= FLAG_SHORT_TEST;
+				/*// 对每个通道进行10次测量
+				 for( i = 0; i < 1; i++) {
+    					sum[0] += ADC_ReadChannel(0);  // 通道0
+    					sum[1] += ADC_ReadChannel(1);  // 通道1
+    					sum[2] += ADC_ReadChannel(2);  // 通道2
+    					sum[3] += ADC_ReadChannel(3);  // 通道3
+				}
+
+				// 计算平均值
+					ADC_Values[0] = sum[0];  // 通道0平均值
+					ADC_Values[1] = sum[1];  // 通道1平均值
+					ADC_Values[2] = sum[2];  // 通道2平均值
+					ADC_Values[3] = sum[3];  // 通道3平均值
+				*/
+				Key_Flags |= FLAG_START;
+            }
+        }
+    }
+	
+    
+    // 更新上一次按键状态
+    key_open_last = key_open_current;
+    key_short_last = key_short_current;
+    key_start_last = key_start_current;
+}
+
+// 清除ADC数据
+void Clear_ADC_Data(void) {
+    unsigned char i;
+    for(i = 0; i < ADC_DATA_SIZE; i++) {
+        ADC_Values_0[i] = 0;
+    }
+    Key_Flags = FLAG_NONE;
+}

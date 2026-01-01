@@ -1,0 +1,15 @@
+#ifndef ADC_H
+#define ADC_H
+
+/* ADC通道定义 */
+#define ADC_CH0 0
+#define ADC_CH1 1
+#define ADC_CH2 2
+#define ADC_CH3 3
+
+/* 函数声明 */
+void ADC_Init(void);
+unsigned int ADC_GetValue(unsigned char channel);
+void ADC_ReadAllChannels(unsigned int *results);
+
+#endif /* ADC_H */

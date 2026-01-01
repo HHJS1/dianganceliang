@@ -1,0 +1,262 @@
+                        .module adc.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile source\adc.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile source\adc.c
+ 0000           _current_channel:
+ 0000                   .blkb 1
+                        .area idata
+ 0000 00                .byte 0
+                        .area data(ram, con, rel)
+ 0001                   .dbfile source\adc.c
+ 0001                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+ 0001                   .dbsym s current_channel _current_channel c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+ 0000                   .dbfunc e ADC_Init _ADC_Init fV
+                        .even
+ 0000           _ADC_Init::
+ 0000                   .dbline -1
+ 0000                   .dbline 7
+ 0000           ; #include "adc.h"
+ 0000           ; #include "main.h"
+ 0000           ; 
+ 0000           ; // 通道索引
+ 0000           ; static unsigned char current_channel = 0;
+ 0000           ; 
+ 0000           ; void ADC_Init(void) {
+ 0000                   .dbline 9
+ 0000           ;     // 使能ADC，设置预分频为128（16MHz/128 = 125kHz）
+ 0000           ;     ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+ 0000 87E8              ldi R24,135
+ 0002 86B9              out 0x6,R24
+ 0004                   .dbline 13
+ 0004           ;     
+ 0004           ;     // 使用内部2.56V作为参考电压，右对齐结果
+ 0004           ;     // REFS1=1, REFS0=1 表示内部2.56V参考电压
+ 0004           ;      ADMUX = (1 << REFS1) | (1 << REFS0);
+ 0004 80EC              ldi R24,192
+ 0006 87B9              out 0x7,R24
+ 0008                   .dbline -2
+ 0008           L2:
+ 0008                   .dbline 0 ; func end
+ 0008 0895              ret
+ 000A                   .dbend
+ 000A                   .dbfunc e ADC_StartContinuousConversion _ADC_StartContinuousConversion fV
+                        .even
+ 000A           _ADC_StartContinuousConversion::
+ 000A                   .dbline -1
+ 000A                   .dbline 16
+ 000A           ; }
+ 000A           ; 
+ 000A           ; void ADC_StartContinuousConversion(void) {
+ 000A                   .dbline 18
+ 000A           ;     // 清除通道选择位
+ 000A           ;     ADMUX &= 0xF0;
+ 000A 87B1              in R24,0x7
+ 000C 807F              andi R24,240
+ 000E 87B9              out 0x7,R24
+ 0010                   .dbline 21
+ 0010           ;     
+ 0010           ;     // 选择第一个通道
+ 0010           ;     ADMUX |= (current_channel & 0x0F);
+ 0010 80910000          lds R24,_current_channel
+ 0014 8F70              andi R24,15
+ 0016 27B0              in R2,0x7
+ 0018 282A              or R2,R24
+ 001A 27B8              out 0x7,R2
+ 001C                   .dbline 24
+ 001C           ;     
+ 001C           ;     // 使能ADC完成中断
+ 001C           ;     ADCSRA |= (1 << ADIE);
+ 001C 339A              sbi 0x6,3
+ 001E                   .dbline 27
+ 001E           ;     
+ 001E           ;     // 开始第一次转换
+ 001E           ;     ADCSRA |= (1 << ADSC);
+ 001E 369A              sbi 0x6,6
+ 0020                   .dbline -2
+ 0020           L3:
+ 0020                   .dbline 0 ; func end
+ 0020 0895              ret
+ 0022                   .dbend
+ 0022                   .dbfunc e ADC_ReadChannel _ADC_ReadChannel fi
+ 0022           ;           high -> R12
+ 0022           ;            low -> R10
+ 0022           ;        channel -> R16
+                        .even
+ 0022           _ADC_ReadChannel::
+ 0022 0E940000          xcall push_xgset003C
+ 0026                   .dbline -1
+ 0026                   .dbline 30
+ 0026           ; }
+ 0026           ; 
+ 0026           ; unsigned int ADC_ReadChannel(unsigned char channel) {
+ 0026                   .dbline 36
+ 0026           ;    
+ 0026           ;     unsigned char low;
+ 0026           ;     unsigned char high;
+ 0026           ;     // 确保通道号在0-7之间
+ 0026           ;       
+ 0026           ;     channel &= 0x07;
+ 0026 0770              andi R16,7
+ 0028                   .dbline 39
+ 0028           ;     
+ 0028           ;     // 选择通道
+ 0028           ;     ADMUX = (ADMUX & 0xF0) | channel;
+ 0028 87B1              in R24,0x7
+ 002A 807F              andi R24,240
+ 002C 802B              or R24,R16
+ 002E 87B9              out 0x7,R24
+ 0030                   .dbline 42
+ 0030           ;     
+ 0030           ;     // 开始转换
+ 0030           ;     ADCSRA |= (1 << ADSC);
+ 0030 369A              sbi 0x6,6
+ 0032           L5:
+ 0032                   .dbline 45
+ 0032           ;     
+ 0032           ;     // 等待转换完成
+ 0032           ;     while (!(ADCSRA & (1 << ADIF)));
+ 0032           L6:
+ 0032                   .dbline 45
+ 0032 349B              sbis 0x6,4
+ 0034 FECF              rjmp L5
+ 0036           X0:
+ 0036                   .dbline 48
+ 0036           ;     
+ 0036           ;     // 清除转换完成标志
+ 0036           ;     ADCSRA |= (1 << ADIF);
+ 0036 349A              sbi 0x6,4
+ 0038                   .dbline 51
+ 0038           ;     
+ 0038           ;     // 读取ADC值（10位）
+ 0038           ;      low = ADCL;
+ 0038 A4B0              in R10,0x4
+ 003A                   .dbline 52
+ 003A           ;      high = ADCH;
+ 003A C5B0              in R12,0x5
+ 003C                   .dbline 53
+ 003C           ;     return ((high << 8) | low)-10;
+ 003C 1C2D              mov R17,R12
+ 003E 0A2D              mov R16,R10
+ 0040 0A50              subi R16,10
+ 0042 1040              sbci R17,0
+ 0044                   .dbline -2
+ 0044           L4:
+ 0044                   .dbline 0 ; func end
+ 0044 0C940000          xjmp pop_xgset003C
+ 0048                   .dbsym r high 12 c
+ 0048                   .dbsym r low 10 c
+ 0048                   .dbsym r channel 16 c
+ 0048                   .dbend
+ 0048                   .dbfunc e ADC_StopContinuousConversion _ADC_StopContinuousConversion fV
+                        .even
+ 0048           _ADC_StopContinuousConversion::
+ 0048                   .dbline -1
+ 0048                   .dbline 56
+ 0048           ; }
+ 0048           ; 
+ 0048           ; void ADC_StopContinuousConversion(void) {
+ 0048                   .dbline 58
+ 0048           ;     // 禁用ADC完成中断
+ 0048           ;     ADCSRA &= ~(1 << ADIE);
+ 0048 3398              cbi 0x6,3
+ 004A                   .dbline -2
+ 004A           L8:
+ 004A                   .dbline 0 ; func end
+ 004A 0895              ret
+ 004C                   .dbend
+ 004C                   .dbfunc e ADC_ToVoltage _ADC_ToVoltage fD
+ 004C           ;      adc_value -> R10,R11
+                        .even
+ 004C           _ADC_ToVoltage::
+ 004C AA92              st -y,R10
+ 004E BA92              st -y,R11
+ 0050 5801              movw R10,R16
+ 0052                   .dbline -1
+ 0052                   .dbline 61
+ 0052           ; }
+ 0052           ; 
+ 0052           ; float ADC_ToVoltage(unsigned int adc_value) {
+ 0052                   .dbline 63
+ 0052           ;     // 假设参考电压为5V，ADC为10位（0-1023）
+ 0052           ;     return (adc_value * 2.56) *1000/ 1023.0;
+ 0052 00E0              ldi R16,<L10
+ 0054 10E0              ldi R17,>L10
+ 0056 0E940000          xcall lpm32
+ 005A 1801              movw R2,R16
+ 005C 2901              movw R4,R18
+ 005E 00E0              ldi R16,<L11
+ 0060 10E0              ldi R17,>L11
+ 0062 0E940000          xcall lpm32
+ 0066 3801              movw R6,R16
+ 0068 4901              movw R8,R18
+ 006A 8501              movw R16,R10
+ 006C 0E940000          xcall uint2fp
+ 0070 3A93              st -y,R19
+ 0072 2A93              st -y,R18
+ 0074 1A93              st -y,R17
+ 0076 0A93              st -y,R16
+ 0078 8301              movw R16,R6
+ 007A 9401              movw R18,R8
+ 007C 0E940000          xcall fpmule2x
+ 0080 8101              movw R16,R2
+ 0082 9201              movw R18,R4
+ 0084 0E940000          xcall fpmule2
+ 0088 1801              movw R2,R16
+ 008A 2901              movw R4,R18
+ 008C 00E0              ldi R16,<L12
+ 008E 10E0              ldi R17,>L12
+ 0090 0E940000          xcall lpm32
+ 0094 3A93              st -y,R19
+ 0096 2A93              st -y,R18
+ 0098 1A93              st -y,R17
+ 009A 0A93              st -y,R16
+ 009C 8101              movw R16,R2
+ 009E 9201              movw R18,R4
+ 00A0 0E940000          xcall fpdiv2
+ 00A4                   .dbline -2
+ 00A4           L9:
+ 00A4                   .dbline 0 ; func end
+ 00A4 B990              ld R11,y+
+ 00A6 A990              ld R10,y+
+ 00A8 0895              ret
+ 00AA                   .dbsym r adc_value 10 i
+ 00AA                   .dbend
+                        .area lit(rom, con, rel)
+ 0000           L12:
+ 0000 00C07F44          .word 0xc000,0x447f
+ 0004           L11:
+ 0004 0AD72340          .word 0xd70a,0x4023
+ 0008           L10:
+ 0008 00007A44          .word 0x0,0x447a
+ 000C           ; }
+ 000C           ; 
+ 000C           ; // ICC AVR中断服务函数的写法
+ 000C           ; // ADC中断服务函数
+ 000C           ; /*
+ 000C           ; #pragma interrupt_handler ADC_ISR:iv_ADC
+ 000C           ; void ADC_ISR(void) {
+ 000C           ;     // 读取ADC值（先读ADCL，再读ADCH）
+ 000C           ;     unsigned char low = ADCL;
+ 000C           ;     unsigned char high = ADCH;
+ 000C           ;     unsigned int adc_value = (high << 8) | low;
+ 000C           ;     
+ 000C           ;     // 存储到对应通道
+ 000C           ;     ADC_Values[current_channel] = adc_value;
+ 000C           ;     
+ 000C           ;     // 切换到下一个通道（0-3循环）
+ 000C           ;     current_channel++;
+ 000C           ;     if(current_channel > 3) {
+ 000C           ;         current_channel = 0;
+ 000C           ;         ADC_Ready = 1;  // 4个通道都采集完成
+ 000C           ;     }
+ 000C           ;     
+ 000C           ;     // 设置下一个通道
+ 000C           ;     ADMUX = (ADMUX & 0xF0) | (current_channel & 0x0F);
+ 000C           ;     
+ 000C           ;     // 开始下一次转换
+ 000C           ;     ADCSRA |= (1 << ADSC);
+ 000C           ; }
+ 000C           ; */

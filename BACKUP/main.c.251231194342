@@ -1,0 +1,379 @@
+/*
+ * ATmega16 USART串口测试程序 - 16MHz外部晶振版本
+ * 时钟频率：16MHz
+ * 波特率：9600
+ * PD0 - RXD (输入)
+ * PD1 - TXD (输出)
+ */
+
+#include <avr/io.h>
+#include <util/delay.h>
+#include <avr/interrupt.h>
+
+// 波特率设置 - 针对16MHz时钟
+#define F_CPU 16000000UL  // 16MHz外部晶振
+#define BAUD 9600
+#define MYUBRR F_CPU/16/BAUD-1  // 计算公式：UBRR = (F_CPU/(16*BAUD))-1
+
+// 接收缓冲区
+#define RX_BUFFER_SIZE 64
+volatile char rx_buffer[RX_BUFFER_SIZE];
+volatile uint8_t rx_head = 0;
+volatile uint8_t rx_tail = 0;
+volatile uint8_t rx_count = 0;
+
+// USART初始化函数（无中断）
+void USART_Init(unsigned int ubrr) {
+    // 设置波特率
+    UBRRH = (unsigned char)(ubrr >> 8);
+    UBRRL = (unsigned char)ubrr;
+    
+    // 使能接收和发送
+    UCSRB = (1 << RXEN) | (1 << TXEN);
+    
+    // 设置帧格式：8位数据位，1位停止位，无校验
+    UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
+}
+
+// USART初始化函数（带接收中断）
+void USART_Init_With_Interrupt(unsigned int ubrr) {
+    // 设置波特率
+    UBRRH = (unsigned char)(ubrr >> 8);
+    UBRRL = (unsigned char)ubrr;
+    
+    // 使能接收、发送和接收中断
+    UCSRB = (1 << RXEN) | (1 << TXEN) | (1 << RXCIE);
+    
+    // 设置帧格式：8位数据位，1位停止位，无校验
+    UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
+    
+    // 清空接收缓冲区
+    rx_head = 0;
+    rx_tail = 0;
+    rx_count = 0;
+    
+    // 使能全局中断
+    sei();
+}
+
+// 发送一个字节（阻塞式）
+void USART_Transmit(unsigned char data) {
+    // 等待发送缓冲区为空
+    while (!(UCSRA & (1 << UDRE)));
+    
+    // 将数据放入缓冲区，发送数据
+    UDR = data;
+}
+
+// 接收一个字节（阻塞式）
+unsigned char USART_Receive(void) {
+    // 等待数据接收完成
+    while (!(UCSRA & (1 << RXC)));
+    
+    // 获取并返回接收到的数据
+    return UDR;
+}
+
+// 检查是否有数据可接收（非阻塞式）
+uint8_t USART_DataAvailable(void) {
+    return (UCSRA & (1 << RXC));
+}
+
+// 发送字符串
+void USART_SendString(const char *str) {
+    while (*str) {
+        USART_Transmit(*str);
+        str++;
+    }
+}
+
+// 发送字符串并换行
+void USART_SendStringLn(const char *str) {
+    USART_SendString(str);
+    USART_Transmit('\r');
+    USART_Transmit('\n');
+}
+
+// 发送数值（整数）
+void USART_SendNumber(uint16_t num) {
+    char buffer[6];
+    uint8_t i = 0;
+    
+    if (num == 0) {
+        USART_Transmit('0');
+        return;
+    }
+    
+    while (num > 0) {
+        buffer[i++] = (num % 10) + '0';
+        num /= 10;
+    }
+    
+    while (i > 0) {
+        USART_Transmit(buffer[--i]);
+    }
+}
+
+// 发送十六进制数
+void USART_SendHex(uint8_t num) {
+    uint8_t high = (num >> 4) & 0x0F;
+    uint8_t low = num & 0x0F;
+    
+    USART_Transmit(high < 10 ? high + '0' : high - 10 + 'A');
+    USART_Transmit(low < 10 ? low + '0' : low - 10 + 'A');
+}
+
+// USART接收中断服务程序
+ISR(USART_RXC_vect) {
+    unsigned char data = UDR;
+    uint8_t next = (rx_head + 1) % RX_BUFFER_SIZE;
+    
+    // 如果缓冲区未满，则保存数据
+    if (rx_count < RX_BUFFER_SIZE - 1) {
+        rx_buffer[rx_head] = data;
+        rx_head = next;
+        rx_count++;
+    }
+    
+    // 自动回显（可选）
+    // USART_Transmit(data);
+}
+
+// 从缓冲区读取一个字符
+char USART_ReadChar(void) {
+    char data = 0;
+    
+    if (rx_count > 0) {
+        data = rx_buffer[rx_tail];
+        rx_tail = (rx_tail + 1) % RX_BUFFER_SIZE;
+        rx_count--;
+    }
+    
+    return data;
+}
+
+// 读取字符串直到遇到回车或缓冲区满
+uint8_t USART_ReadString(char *buffer, uint8_t max_len) {
+    uint8_t len = 0;
+    char ch;
+    
+    while (len < max_len - 1) {
+        if (rx_count > 0) {
+            ch = USART_ReadChar();
+            
+            if (ch == '\r' || ch == '\n') {
+                break;
+            }
+            
+            buffer[len++] = ch;
+        }
+    }
+    
+    buffer[len] = '\0';  // 字符串结束符
+    return len;
+}
+
+// 清空接收缓冲区
+void USART_FlushBuffer(void) {
+    rx_head = 0;
+    rx_tail = 0;
+    rx_count = 0;
+}
+
+// 获取缓冲区中数据数量
+uint8_t USART_BufferCount(void) {
+    return rx_count;
+}
+
+// 测试1：简单回显程序（阻塞式）
+void Test_SimpleEcho(void) {
+    USART_SendStringLn("ATmega16 USART Test - Simple Echo Mode");
+    USART_SendStringLn("Clock: 16MHz, Baud: 9600");
+    USART_SendStringLn("Type any character to echo...");
+    USART_SendString("> ");
+    
+    while (1) {
+        unsigned char received = USART_Receive();
+        
+        // 回显字符
+        USART_Transmit(received);
+        
+        // 如果收到回车，发送换行并显示提示符
+        if (received == '\r' || received == '\n') {
+            USART_Transmit('\n');
+            USART_SendString("> ");
+        }
+    }
+}
+
+// 测试2：中断模式回显程序
+void Test_InterruptEcho(void) {
+    USART_Init_With_Interrupt(MYUBRR);
+    
+    USART_SendStringLn("ATmega16 USART Test - Interrupt Mode");
+    USART_SendStringLn("Clock: 16MHz, Baud: 9600");
+    USART_SendStringLn("Type commands (help, echo, test, clear)");
+    USART_SendString("> ");
+    
+    char input_buffer[32];
+    uint8_t input_len = 0;
+    
+    while (1) {
+        // 检查是否有完整的命令（以回车结束）
+        if (rx_count > 0) {
+            char ch = USART_ReadChar();
+            
+            // 回显字符
+            USART_Transmit(ch);
+            
+            if (ch == '\r' || ch == '\n') {
+                // 命令结束
+                if (input_len > 0) {
+                    input_buffer[input_len] = '\0';
+                    USART_Transmit('\n');
+                    
+                    // 处理命令
+                    if (strcmp(input_buffer, "help") == 0) {
+                        USART_SendStringLn("Available commands:");
+                        USART_SendStringLn("  help    - Show this help");
+                        USART_SendStringLn("  echo    - Test echo");
+                        USART_SendStringLn("  test    - Run test sequence");
+                        USART_SendStringLn("  clear   - Clear screen");
+                        USART_SendStringLn("  version - Show version info");
+                    }
+                    else if (strcmp(input_buffer, "echo") == 0) {
+                        USART_SendStringLn("Echo test: Type something...");
+                        USART_SendString("> ");
+                        
+                        // 等待输入并回显
+                        uint8_t echo_len = 0;
+                        char echo_buffer[32];
+                        
+                        while (1) {
+                            if (rx_count > 0) {
+                                ch = USART_ReadChar();
+                                USART_Transmit(ch);
+                                
+                                if (ch == '\r' || ch == '\n') {
+                                    USART_Transmit('\n');
+                                    echo_buffer[echo_len] = '\0';
+                                    USART_SendString("You typed: ");
+                                    USART_SendStringLn(echo_buffer);
+                                    break;
+                                }
+                                else if (echo_len < 31) {
+                                    echo_buffer[echo_len++] = ch;
+                                }
+                            }
+                        }
+                    }
+                    else if (strcmp(input_buffer, "test") == 0) {
+                        USART_SendString("System test... ");
+                        USART_SendString("Clock: 16MHz, ");
+                        USART_SendString("Baud: 9600, ");
+                        USART_SendString("Buffer: ");
+                        USART_SendNumber(RX_BUFFER_SIZE);
+                        USART_SendStringLn(" bytes");
+                        
+                        // 发送测试数据
+                        for (uint8_t i = 1; i <= 10; i++) {
+                            USART_SendString("Test count: ");
+                            USART_SendNumber(i);
+                            USART_Transmit('\r');
+                            _delay_ms(100);
+                        }
+                        USART_Transmit('\n');
+                    }
+                    else if (strcmp(input_buffer, "clear") == 0) {
+                        // 发送清屏序列（适用于大多数终端）
+                        USART_SendString("\033[2J\033[H");  // ANSI清屏序列
+                    }
+                    else if (strcmp(input_buffer, "version") == 0) {
+                        USART_SendStringLn("ATmega16 USART Demo v1.0");
+                        USART_SendStringLn("16MHz External Crystal");
+                        USART_SendStringLn("Compiled: " __DATE__ " " __TIME__);
+                    }
+                    else {
+                        USART_SendString("Unknown command: ");
+                        USART_SendStringLn(input_buffer);
+                        USART_SendStringLn("Type 'help' for available commands");
+                    }
+                    
+                    input_len = 0;
+                    USART_SendString("> ");
+                }
+            }
+            else if (input_len < 31) {
+                // 保存字符到输入缓冲区
+                input_buffer[input_len++] = ch;
+            }
+        }
+        
+        // 主循环中可以执行其他任务
+        // _delay_ms(10);
+    }
+}
+
+// 测试3：性能测试模式
+void Test_Performance(void) {
+    USART_Init(MYUBRR);
+    
+    USART_SendStringLn("ATmega16 USART Performance Test");
+    USART_SendStringLn("Sending data at maximum speed...");
+    
+    uint32_t counter = 0;
+    char message[] = "Hello from ATmega16! Counter: ";
+    
+    while (1) {
+        USART_SendString(message);
+        USART_SendNumber(counter++);
+        USART_Transmit('\r');
+        USART_Transmit('\n');
+        
+        // 可以调整延迟来改变发送速度
+        _delay_ms(100);
+        
+        if (counter % 10 == 0) {
+            USART_SendString("Sent ");
+            USART_SendNumber(counter);
+            USART_SendStringLn(" messages");
+        }
+    }
+}
+
+int main(void) {
+    // 选择测试模式：
+    // 1 = 简单回显（阻塞式）
+    // 2 = 中断命令模式（推荐）
+    // 3 = 性能测试模式
+    uint8_t test_mode = 2;
+    
+    // 根据选择的测试模式运行不同的测试
+    switch (test_mode) {
+        case 1:
+            USART_Init(MYUBRR);
+            Test_SimpleEcho();
+            break;
+            
+        case 2:
+            Test_InterruptEcho();
+            break;
+            
+        case 3:
+            Test_Performance();
+            break;
+            
+        default:
+            // 默认使用中断模式
+            USART_Init_With_Interrupt(MYUBRR);
+            USART_SendStringLn("Default mode: Interrupt Echo");
+            while (1) {
+                if (USART_BufferCount() > 0) {
+                    char ch = USART_ReadChar();
+                    USART_Transmit(ch);
+                }
+            }
+    }
+    
+    return 0;
+}

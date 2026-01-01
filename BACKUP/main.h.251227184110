@@ -1,0 +1,8 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+/* º¯ÊıÉùÃ÷ */
+void System_Init(void);
+void System_MainLoop(void);
+
+#endif /* MAIN_H */

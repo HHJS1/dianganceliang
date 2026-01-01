@@ -1,0 +1,104 @@
+XL
+H 4 areas C global symbols
+M adc.c
+S push_xgset003C Ref0000
+S fpmule2x Ref0000
+S fpdiv2 Ref0000
+S lpm32 Ref0000
+S pop_xgset003C Ref0000
+S fpmule2 Ref0000
+S uint2fp Ref0000
+A text size AA flags 0
+dbfile source\adc.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+dbfunc e ADC_Init 0 fV
+dbline FFFFFFFF 0
+dbline 7 0
+dbline 9 0
+dbline D 4
+dbline FFFFFFFE 8
+dbline 0 8
+dbfunc e ADC_StartContinuousConversion A fV
+dbline FFFFFFFF A
+dbline 10 A
+dbline 12 A
+dbline 15 10
+dbline 18 1C
+dbline 1B 1E
+dbline FFFFFFFE 20
+dbline 0 20
+dbfunc e ADC_ReadChannel 22 fi
+dbsym r high C c
+dbsym r low A c
+dbsym r channel 10 c
+dbline FFFFFFFF 26
+dbline 1E 26
+dbline 24 26
+dbline 27 28
+dbline 2A 30
+dbline 2D 32
+dbline 2D 32
+dbline 30 36
+dbline 33 38
+dbline 34 3A
+dbline 35 3C
+dbline FFFFFFFE 44
+dbline 0 44
+dbfunc e ADC_StopContinuousConversion 48 fV
+dbline FFFFFFFF 48
+dbline 38 48
+dbline 3A 48
+dbline FFFFFFFE 4A
+dbline 0 4A
+dbfunc e ADC_ToVoltage 4C fD
+dbsym r adc_value A i
+dbline FFFFFFFF 52
+dbline 3D 52
+dbline 3F 52
+dbline FFFFFFFE A4
+dbline 0 A4
+S _ADC_Init Def0000
+S _ADC_ToVoltage Def004C
+S _ADC_StopContinuousConversion Def0048
+S _ADC_ReadChannel Def0022
+S _ADC_StartContinuousConversion Def000A
+A data size 1 flags 20
+dbfile source\adc.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+dbsym s current_channel 0 c
+A idata size 1 flags 0
+A lit size C flags 0
+T 00 00 00
+R 00 00 02 00
+T 00 00 87 E8 86 B9 80 EC 87 B9 08 95
+R 00 00 00 00
+T 0A 00 87 B1 80 7F 87 B9 80 91 00 00 8F 70 27 B0
+R 00 00 00 00 00 0A 01 00
+T 18 00 28 2A 27 B8 33 9A 36 9A 08 95
+R 00 00 00 00
+T 22 00 0E 94 00 00 07 70 87 B1 80 7F 80 2B 87 B9
+R 00 00 00 00 12 04 00 00
+T 30 00 36 9A 34 9B FE CF 34 9A A4 B0 C5 B0 1C 2D
+R 00 00 00 00
+T 3E 00 0A 2D 0A 50 10 40 0C 94 00 00
+R 00 00 00 00 12 0A 04 00
+T 48 00 33 98 08 95
+R 00 00 00 00
+T 4C 00 AA 92 BA 92 58 01 00 E0 10 E0
+R 00 00 00 00 20 08 03 00 08 00 40 0A 03 00 08 00
+T 56 00 0E 94 00 00 18 01 29 01 00 E0
+R 00 00 00 00 12 04 03 00 20 0A 03 00 04 00
+T 60 00 10 E0 0E 94 00 00 38 01 49 01 85 01
+R 00 00 00 00 40 02 03 00 04 00 12 06 03 00
+T 6C 00 0E 94 00 00 3A 93 2A 93 1A 93 0A 93 83 01
+R 00 00 00 00 12 04 06 00
+T 7A 00 94 01 0E 94 00 00 81 01 92 01 0E 94 00 00
+R 00 00 00 00 12 06 01 00 12 0E 05 00
+T 88 00 18 01 29 01 00 E0 10 E0
+R 00 00 00 00 20 06 03 00 00 00 40 08 03 00 00 00
+T 90 00 0E 94 00 00 3A 93 2A 93 1A 93 0A 93 81 01
+R 00 00 00 00 12 04 03 00
+T 9E 00 92 01 0E 94 00 00 B9 90 A9 90 08 95
+R 00 00 00 00 12 06 02 00
+T 00 00 00 C0 7F 44 0A D7 23 40 00 00 7A 44
+R 00 00 03 00

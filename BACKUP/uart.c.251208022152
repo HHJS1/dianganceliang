@@ -1,0 +1,254 @@
+#include "uart.h"
+
+/* 全局变量定义 */
+volatile unsigned char uart_tx_busy = 0;
+volatile unsigned char uart_rx_buffer[32];
+volatile unsigned char uart_rx_index = 0;
+
+/* UART初始化 */
+void UART_Init(unsigned long baud_rate)
+{
+    unsigned int ubrr_value;
+    
+    /* 计算波特率设置值 */
+    ubrr_value = (unsigned long)(16000000UL / (16UL * baud_rate)) - 1;
+    
+    /* 设置波特率寄存器 */
+    UBRRL = (unsigned char)ubrr_value;
+    UBRRH = (unsigned char)(ubrr_value >> 8);
+    
+    /* 使能接收器和发送器 */
+    UCSRB = (1 << RXEN) | (1 << TXEN);
+    
+    /* 设置帧格式：8数据位，1停止位，无校验 */
+    UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
+    
+    /* 初始化接收缓冲区 */
+    uart_rx_index = 0;
+    uart_tx_busy = 0;
+}
+
+/* 发送一个字节 */
+void UART_TransmitByte(unsigned char data)
+{
+    /* 等待发送缓冲区为空 */
+    while (!(UCSRA & (1 << UDRE)))
+    {
+        /* 空循环等待 */
+    }
+    
+    /* 放入数据，启动发送 */
+    UDR = data;
+}
+
+/* 接收一个字节（非阻塞） */
+unsigned char UART_ReceiveByte(void)
+{
+    /* 检查是否有数据接收完成 */
+    if (UCSRA & (1 << RXC))
+    {
+        return UDR;
+    }
+    return 0xFF;  /* 无数据 */
+}
+
+/* 发送字符串 */
+void UART_TransmitString(const char *str)
+{
+    while (*str)
+    {
+        UART_TransmitByte(*str);
+        str++;
+    }
+}
+
+/* 发送16位整数（分高低字节发送） */
+void UART_SendUint16(unsigned int value)
+{
+    UART_TransmitByte((unsigned char)(value >> 8));  /* 高字节 */
+    UART_TransmitByte((unsigned char)(value & 0xFF));  /* 低字节 */
+}
+
+/* 发送有符号16位整数（分高低字节发送） */
+void UART_SendInt16(int value)
+{
+    UART_TransmitByte((unsigned char)(value >> 8));  /* 高字节 */
+    UART_TransmitByte((unsigned char)(value & 0xFF));  /* 低字节 */
+}
+
+/* 将温度转换为整数（乘以10） */
+int TemperatureToInt(float temp_celsius)
+{
+    int temp_int;
+    
+    /* 温度乘以10，四舍五入 */
+    if (temp_celsius >= 0)
+    {
+        temp_int = (int)(temp_celsius * 10.0f + 0.5f);
+    }
+    else
+    {
+        temp_int = (int)(temp_celsius * 10.0f - 0.5f);
+    }
+    
+    /* 限制在范围内 */
+    if (temp_int < TEMP_MIN)
+    {
+        temp_int = TEMP_MIN;
+    }
+    else if (temp_int > TEMP_MAX)
+    {
+        temp_int = TEMP_MAX;
+    }
+    
+    return temp_int;
+}
+
+/* 将整数转换为温度（除以10） */
+float IntToTemperature(int temp_int)
+{
+    return (float)temp_int / 10.0f;
+}
+
+/* 限制频率范围 */
+unsigned int LimitFrequency(unsigned int freq)
+{
+    if (freq > FREQ_MAX)
+    {
+        freq = FREQ_MAX;
+    }
+    return freq;
+}
+
+/* 限制温度整数范围 */
+int LimitTemperature(int temp_int)
+{
+    if (temp_int < TEMP_MIN)
+    {
+        temp_int = TEMP_MIN;
+    }
+    else if (temp_int > TEMP_MAX)
+    {
+        temp_int = TEMP_MAX;
+    }
+    return temp_int;
+}
+
+/* 限制光强电压范围 */
+unsigned int LimitLightVoltage(unsigned int light_mv)
+{
+    if (light_mv > LIGHT_MAX)
+    {
+        light_mv = LIGHT_MAX;
+    }
+    return light_mv;
+}
+
+/* 计算校验和（字节累加和取低8位） */
+unsigned char CalculateChecksum(unsigned char *data, unsigned char length)
+{
+    unsigned int sum = 0;
+    unsigned char i;
+    
+    for (i = 0; i < length; i++)
+    {
+        sum += data[i];
+    }
+    
+    return (unsigned char)(sum & 0xFF);
+}
+
+/* 发送数据帧（新格式） */
+void UART_SendFrame(unsigned int frequency, int temperature, unsigned int light_voltage)
+{
+    unsigned char checksum = 0;
+    
+    /* 限制数值范围 */
+    frequency = LimitFrequency(frequency);
+    temperature = LimitTemperature(temperature);
+    light_voltage = LimitLightVoltage(light_voltage);
+    
+    /* 帧头 */
+    UART_TransmitByte(FRAME_HEADER_1);
+    UART_TransmitByte(FRAME_HEADER_2);
+    
+    /* 设备ID */
+    UART_TransmitByte(DEVICE_ID);
+    
+    /* 频率值（2字节无符号整数） */
+    UART_SendUint16(frequency);
+    
+    /* 温度值（2字节有符号整数，乘以10） */
+    UART_SendInt16(temperature);
+    
+    /* 光强电压（2字节无符号整数） */
+    UART_SendUint16(light_voltage);
+    
+    /* 计算校验和（帧头开始到光强电压结束的所有字节） */
+    checksum = FRAME_HEADER_1 + FRAME_HEADER_2 + DEVICE_ID;
+    checksum += (unsigned char)(frequency >> 8);
+    checksum += (unsigned char)(frequency & 0xFF);
+    checksum += (unsigned char)(temperature >> 8);
+    checksum += (unsigned char)(temperature & 0xFF);
+    checksum += (unsigned char)(light_voltage >> 8);
+    checksum += (unsigned char)(light_voltage & 0xFF);
+    
+    /* 发送校验和 */
+    UART_TransmitByte(checksum);
+    
+    /* 帧结束符（可选） */
+    UART_TransmitByte(FRAME_END);
+}
+
+/* 发送无符号整数作为字符串 */
+void UART_SendUintAsString(unsigned int value)
+{
+    char buffer[6];
+    unsigned char i = 0;
+    unsigned char j;
+    
+    /* 处理0特殊情况 */
+    if (value == 0)
+    {
+        UART_TransmitByte('0');
+        return;
+    }
+    
+    /* 转换数字为字符串（逆序） */
+    while (value > 0)
+    {
+        buffer[i++] = '0' + (value % 10);
+        value /= 10;
+    }
+    
+    /* 反转字符串并发送 */
+    for (j = i; j > 0; j--)
+    {
+        UART_TransmitByte(buffer[j-1]);
+    }
+}
+
+/* UART处理函数（定时调用） */
+void UART_Process(void)
+{
+    static unsigned int uart_counter = 0;
+    unsigned int frequency;
+    int temperature;
+    unsigned int light_voltage;
+    
+    /* 每500ms发送一次数据帧 */
+    uart_counter++;
+    if (uart_counter >= 500)
+    {
+        uart_counter = 0;
+        
+        /* 这里需要从其他模块获取实际数据 */
+        /* 示例数据： */
+        frequency = 1234;                     /* 从频率测量模块获取 */
+        temperature = TemperatureToInt(-25.5f); /* 从温度测量模块获取并转换 */
+        light_voltage = 1500;                 /* 从光强测量模块获取 */
+        
+        /* 发送二进制格式数据帧 */
+        UART_SendFrame(frequency, temperature, light_voltage);
+    }
+}

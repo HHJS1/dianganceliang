@@ -1,0 +1,106 @@
+#include <iom16v.h>
+#include "main.h"
+#include "adc.h"
+#include "LCD_1602.h"
+
+
+uint8_t adc_0[]={"ADC_0: .    V"};	
+uint8_t adc_1[]={"ADC_1: .    V"};	
+uint8_t adc_2[]={"ADC_2: .    V"};	
+uint8_t adc_3[]={"ADC_3: .    V"};
+uint8_t ASCII[] =    {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};	 
+uint8_t	disbuf[5]={0,0,0,0,0};
+
+
+void ADC_Display(uint8_t hang,uint32_t voltage_mv)
+{
+ 	 
+ 	  uint32_t i = voltage_mv;			  
+ 	  //disbuf[4]=i/10000;
+      //i=i%10000;
+      disbuf[3]=i/1000;
+      i=i%1000;
+      disbuf[2]=i/100;
+      i=i%100;
+	  disbuf[1]=i/10;
+	  i=i%10;
+	  disbuf[0]=i;
+	  
+	  WriteNum(hang,6,ASCII[disbuf[3]]);
+	  WriteNum(hang,8,ASCII[disbuf[2]]);
+	  WriteNum(hang,9,ASCII[disbuf[1]]);
+	  WriteNum(hang,10,ASCII[disbuf[0]]);
+	  //WriteNum(1,11,ASCII[disbuf[0]]);
+
+}
+
+
+
+/* 延时函数 - 简单的循环延时 */
+void delay_ms(unsigned int ms)
+{
+    unsigned int i, j;
+    for (i = 0; i < ms; i++)
+    {
+        for (j = 0; j < 1140; j++)  /* 调整这个值以校准延时 */
+        {
+            asm("nop");
+        }
+    }
+}
+
+/* 主函数 */
+void main(void)
+{
+    /* 系统初始化 */
+    System_Init();
+    
+    /* 主循环 */
+    while (1)
+    {
+        System_MainLoop();
+    }
+}
+
+/* 系统初始化函数 */
+void System_Init(void)
+{
+    /* 初始化ADC */
+    ADC_Init();
+}
+
+/* 系统主循环函数 */
+void System_MainLoop(void)
+{
+    static unsigned char channel_counter = 0;
+    unsigned int adc_value;
+    
+    /* 循环读取四个通道的ADC值 */
+    adc_value = ADC_GetValue(channel_counter);
+    
+    /* 这里可以添加对ADC值的处理逻辑 */
+	switch(channel_counter)
+	{
+	
+	case 0:
+		   ADC_Display(1,adc_value*1000);
+		   break;
+	case 1:
+		   ADC_Display(2,adc_value*1000);
+		   break;
+	
+	
+	}
+	
+    /* 例如：显示、控制等 */
+    
+    /* 切换到下一个通道 */
+    channel_counter++;
+    if (channel_counter > 3)
+    {
+        channel_counter = 0;
+    }
+    
+    /* 短暂延时，控制采样率 */
+    delay_ms(10);
+}

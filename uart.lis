@@ -1,0 +1,155 @@
+                        .module uart.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile source\uart.c
+ 0000                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\uart.c
+ 0000                   .dbfunc e UART_Init _UART_Init fV
+                        .even
+ 0000           _UART_Init::
+ 0000                   .dbline -1
+ 0000                   .dbline 6
+ 0000           ; #include "uart.h"
+ 0000           ; 
+ 0000           ; #define BAUD 9600
+ 0000           ; #define BAUD_PRESCALE (((16000000 / (BAUD * 16UL))) - 1)
+ 0000           ; 
+ 0000           ; void UART_Init(void) {
+ 0000                   .dbline 8
+ 0000           ;     // 设置波特率
+ 0000           ;     UBRRH = (unsigned char)(BAUD_PRESCALE >> 8);
+ 0000 2224              clr R2
+ 0002 20BC              out 0x20,R2
+ 0004                   .dbline 9
+ 0004           ;     UBRRL = (unsigned char)(BAUD_PRESCALE);
+ 0004 87E6              ldi R24,103
+ 0006 89B9              out 0x9,R24
+ 0008                   .dbline 12
+ 0008           ;     
+ 0008           ;     // 使能接收和发送
+ 0008           ;     UCSRB = (1 << RXEN) | (1 << TXEN);
+ 0008 88E1              ldi R24,24
+ 000A 8AB9              out 0xa,R24
+ 000C                   .dbline 15
+ 000C           ;     
+ 000C           ;     // 设置帧格式: 8位数据位，1位停止位，无奇偶校验
+ 000C           ;     UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
+ 000C 86E8              ldi R24,134
+ 000E 80BD              out 0x20,R24
+ 0010                   .dbline -2
+ 0010           L1:
+ 0010                   .dbline 0 ; func end
+ 0010 0895              ret
+ 0012                   .dbend
+ 0012                   .dbfunc e UART_Transmit _UART_Transmit fV
+ 0012           ;           data -> R16
+                        .even
+ 0012           _UART_Transmit::
+ 0012                   .dbline -1
+ 0012                   .dbline 18
+ 0012           ; }
+ 0012           ; 
+ 0012           ; void UART_Transmit(unsigned char data) {
+ 0012           L3:
+ 0012                   .dbline 20
+ 0012           ;     // 等待发送缓冲区为空
+ 0012           ;     while (!(UCSRA & (1 << UDRE)));
+ 0012           L4:
+ 0012                   .dbline 20
+ 0012 5D9B              sbis 0xb,5
+ 0014 FECF              rjmp L3
+ 0016           X0:
+ 0016                   .dbline 23
+ 0016           ;     
+ 0016           ;     // 发送数据
+ 0016           ;     UDR = data;
+ 0016 0CB9              out 0xc,R16
+ 0018                   .dbline -2
+ 0018           L2:
+ 0018                   .dbline 0 ; func end
+ 0018 0895              ret
+ 001A                   .dbsym r data 16 c
+ 001A                   .dbend
+ 001A                   .dbfunc e UART_Receive _UART_Receive fc
+                        .even
+ 001A           _UART_Receive::
+ 001A                   .dbline -1
+ 001A                   .dbline 26
+ 001A           ; }
+ 001A           ; 
+ 001A           ; unsigned char UART_Receive(void) {
+ 001A           L7:
+ 001A                   .dbline 28
+ 001A           ;     // 等待接收到数据
+ 001A           ;     while (!(UCSRA & (1 << RXC)));
+ 001A           L8:
+ 001A                   .dbline 28
+ 001A 5F9B              sbis 0xb,7
+ 001C FECF              rjmp L7
+ 001E           X1:
+ 001E                   .dbline 31
+ 001E           ;     
+ 001E           ;     // 返回接收到的数据
+ 001E           ;     return UDR;
+ 001E 0CB1              in R16,0xc
+ 0020                   .dbline -2
+ 0020           L6:
+ 0020                   .dbline 0 ; func end
+ 0020 0895              ret
+ 0022                   .dbend
+ 0022                   .dbfunc e UART_DataAvailable _UART_DataAvailable fc
+                        .even
+ 0022           _UART_DataAvailable::
+ 0022                   .dbline -1
+ 0022                   .dbline 34
+ 0022           ; }
+ 0022           ; 
+ 0022           ; unsigned char UART_DataAvailable(void) {
+ 0022                   .dbline 36
+ 0022           ;     // 检查是否有数据可读
+ 0022           ;     return (UCSRA & (1 << RXC));
+ 0022 0BB1              in R16,0xb
+ 0024 0078              andi R16,128
+ 0026                   .dbline -2
+ 0026           L10:
+ 0026                   .dbline 0 ; func end
+ 0026 0895              ret
+ 0028                   .dbend
+ 0028                   .dbfunc e UART_TransmitString _UART_TransmitString fV
+ 0028           ;            str -> R10,R11
+                        .even
+ 0028           _UART_TransmitString::
+ 0028 AA92              st -y,R10
+ 002A BA92              st -y,R11
+ 002C 5801              movw R10,R16
+ 002E                   .dbline -1
+ 002E                   .dbline 39
+ 002E           ; }
+ 002E           ; 
+ 002E           ; void UART_TransmitString(const char* str) {
+ 002E 04C0              xjmp L13
+ 0030           L12:
+ 0030                   .dbline 40
+ 0030           ;     while (*str) {
+ 0030                   .dbline 41
+ 0030           ;         UART_Transmit(*str++);
+ 0030 F501              movw R30,R10
+ 0032 0191              ld R16,Z+
+ 0034 5F01              movw R10,R30
+ 0036 EDDF              xcall _UART_Transmit
+ 0038                   .dbline 42
+ 0038           ;     }
+ 0038           L13:
+ 0038                   .dbline 40
+ 0038 F501              movw R30,R10
+ 003A 2080              ldd R2,z+0
+ 003C 2220              tst R2
+ 003E C1F7              brne L12
+ 0040           X2:
+ 0040                   .dbline -2
+ 0040           L11:
+ 0040                   .dbline 0 ; func end
+ 0040 B990              ld R11,y+
+ 0042 A990              ld R10,y+
+ 0044 0895              ret
+ 0046                   .dbsym r str 10 pc
+ 0046                   .dbend
+ 0046           ; }

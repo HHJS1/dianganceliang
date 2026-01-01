@@ -1,0 +1,226 @@
+#include"LCD_1602.h"
+
+void s_ms(uint ms)
+{
+	for(;ms>1;ms--);
+}	
+
+//???
+void busy(void)
+{
+    uchar temp;
+	s_ms(500);
+	PORTA&=~(1<<RS);    //RS=0
+	s_ms(500);
+	PORTA|=(1<<RW);     //RW=1
+	s_ms(500);
+	while(temp)
+	{
+		PORTA|=(1<<EN); //EN=1
+		s_ms(500);
+		DDRB=0x00;      //A???????
+		PORTB=0xff;     //???????
+		s_ms(500);
+		temp = PINB&0x80;    //???A??
+		s_ms(500);      
+		DDRB=0xff;      
+		PORTB=0xff;        //A??????
+		s_ms(500);
+		PORTA&=~(1<<EN);   //EN=0
+		s_ms(500);
+	}
+}
+
+//§Õ???
+void writecom(uchar	com)
+{
+	busy();
+	s_ms(500);
+	PORTA&=~(1<<RS);   //RS=0
+	s_ms(500);
+	PORTA&=~(1<<RW);   //RW=0
+	s_ms(500);
+	PORTA|=(1<<EN);    //EN=1
+	s_ms(500);
+	PORTB = com;       //??????
+	s_ms(500);
+	PORTA&=~(1<<EN);   //EN=0
+	s_ms(500);
+}
+
+//1602?????
+void	LcdInit(void)
+{
+    DDRB = 0xff; 
+    PORTB = 0x00; 
+	writecom(0x38);
+	s_ms(1000);
+	writecom(0x01);
+	s_ms(1000);
+	s_ms(1000);
+	s_ms(1000);
+	s_ms(1000);
+	s_ms(1000);
+	s_ms(1000);
+	s_ms(1000);
+	writecom(0x02);
+	s_ms(1000);
+	writecom(0x06);
+	s_ms(1000);
+	writecom(0x0c);
+	s_ms(1000);
+	writecom(0x38);	
+	s_ms(1000);
+}	
+
+//§Õ????
+void	writedata(uchar data)
+{
+	busy();
+	s_ms(500);
+	PORTA|=(1<<RS);   //RS=1
+	s_ms(500);
+	PORTA&=~(1<<RW);   //RW=0
+	s_ms(500);
+	PORTA|=(1<<EN);    //EN=1
+	s_ms(500);
+	PORTB = data;      //???????
+	s_ms(500);
+	PORTA&=~(1<<EN);   //EN=0
+	s_ms(500);
+}
+
+
+//??????
+uchar	readdata(void)
+{
+	uchar temp;
+	busy();
+	s_ms(500);
+	PORTA|=(1<<RS);  //RS=1
+	s_ms(500);
+	PORTA|=(1<<RW);  //RW=1
+	s_ms(500);
+	PORTA|=(1<<EN);  //EN=1
+	s_ms(500);
+	DDRB=0x00;       //A????????
+	s_ms(500);
+	temp = PINB;     //??A???
+	s_ms(500);
+	DDRB=0xff;       //A???????
+	s_ms(500);
+	PORTA&=~(1<<EN); //EN=0
+	s_ms(500);
+	return temp;	
+}
+
+//=================================================
+// ?????? §ÕLCD???CGRAM????
+// ???? ??num???§Õ?????????
+//        ??pbuffer???§Õ???????????
+// ????? ??
+//================================================
+void	WriteCGRAM(uint	num, const uint	*pBuffer)
+{
+	uint	i,t;
+	writecom(0x40);
+	PORTA|=(1<<RS);
+	PORTA&=~(1<<RW);
+	for(i=num;i!=0;i--)
+	{
+		t = *pBuffer;
+		PORTA|=(1<<EN);
+		PORTB = t;
+		PORTA&=~(1<<EN);				
+		pBuffer++;
+	}
+	
+}
+
+//=================================================
+//??????§Õ???????????????????LCD???? 16 * 2
+//???????????????
+//???????
+//=================================================
+void	WriteMenu(const uchar *pBuffer)
+{
+	uchar	i,t;
+	writecom(0x80);   //??????
+	
+	PORTA|=(1<<RS);
+	PORTA&=~(1<<RW);
+	s_ms(50);
+	for(i=0;i<16;i++)
+	{
+		t = *pBuffer;
+		PORTB = t;
+		PORTA|=(1<<EN);
+		s_ms(50);
+		PORTA&=~(1<<EN);				
+		pBuffer++;
+	}
+	writecom(0xC0);
+
+	PORTA|=(1<<RS);
+	PORTA&=~(1<<RW);
+	s_ms(50);	
+	for(i=0;i<16;i++)
+	{
+		t = *pBuffer;
+		PORTB = t;
+		PORTA|=(1<<EN);
+		s_ms(50);
+		PORTA&=~(1<<EN);				
+		pBuffer++;
+	}
+}
+//====================================================
+// ????????????¦Ë??§Õ???????
+// ??????row??????§Õ??????????§Ö????????1??2
+//       ??col??????§Õ??????????§Ö????????0--15
+//		 ??num??????§Õ???????????0--9
+// ???????
+//===================================================
+void	WriteNum(uint	row,uint	col,uint	 num)
+{
+	if (row == 1)	row = 0x80 + col;
+	else	row = 0xC0 + col;
+	writecom(row);
+	writedata(num);
+
+	
+}
+//================================================================
+// ????????????¦Ë??§Õ?????????
+// ??????row???§Õ???????????§µ?????1??2??
+//       ??col???§Õ???????????§µ?????0---15
+//       ??num???§Õ????????
+//       ??pbuffer???§Õ?????????
+//================================================================== 
+void	WriteChar(uchar row,uchar col,uint num,uchar *pBuffer)
+{
+	uchar i,t;
+	if (row == 1)	row = 0x80 + col;
+	else	row = 0xC0 + col;
+	writecom(row);
+	//if (num<=0 | num>9)	num =0x30;
+	//else	num = 0x30 + num;
+
+	PORTA|=(1<<RS);
+	s_ms(500);
+	PORTA&=~(1<<RW);
+	s_ms(500);
+	for(i=num;i!=0;i--)
+	{
+		t = *pBuffer;
+		s_ms(500);
+		PORTB = t;
+		s_ms(500);
+		PORTA|=(1<<EN);
+		s_ms(500);
+		PORTA&=~(1<<EN);		
+		s_ms(500);		
+		pBuffer++;
+	}
+	
+}

@@ -1,0 +1,863 @@
+                        .module keys.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile source\keys.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile source\keys.c
+ 0000           _key_open_debounce:
+ 0000                   .blkb 1
+                        .area idata
+ 0000 00                .byte 0
+                        .area data(ram, con, rel)
+ 0001                   .dbfile source\keys.c
+ 0001                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0001                   .dbsym s key_open_debounce _key_open_debounce c
+ 0001           _key_short_debounce:
+ 0001                   .blkb 1
+                        .area idata
+ 0001 00                .byte 0
+                        .area data(ram, con, rel)
+ 0002                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0002                   .dbsym s key_short_debounce _key_short_debounce c
+ 0002           _key_clear_debounce:
+ 0002                   .blkb 1
+                        .area idata
+ 0002 00                .byte 0
+                        .area data(ram, con, rel)
+ 0003                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0003                   .dbsym s key_clear_debounce _key_clear_debounce c
+ 0003           _sum::
+ 0003                   .blkb 2
+                        .area idata
+ 0003 0000              .word 0
+                        .area data(ram, con, rel)
+ 0005                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0005                   .blkb 6
+                        .area idata
+ 0005 000000000000      .byte 0,0,0,0,0,0
+                        .area data(ram, con, rel)
+ 000B                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 000B                   .dbsym e sum _sum A[8:4]i
+ 000B           _ADC_buf::
+ 000B                   .blkb 2
+                        .area idata
+ 000B 0000              .word 0
+                        .area data(ram, con, rel)
+ 000D                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 000D                   .blkb 6
+                        .area idata
+ 000D 000000000000      .byte 0,0,0,0,0,0
+                        .area data(ram, con, rel)
+ 0013                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0013                   .dbsym e ADC_buf _ADC_buf A[8:4]i
+ 0013           _i::
+ 0013                   .blkb 1
+                        .area idata
+ 0013 00                .byte 0
+                        .area data(ram, con, rel)
+ 0014                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0014                   .dbsym e i _i c
+ 0014           _j::
+ 0014                   .blkb 1
+                        .area idata
+ 0014 00                .byte 0
+                        .area data(ram, con, rel)
+ 0015                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0015                   .dbsym e j _j c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0000                   .dbfunc e Keys_Init _Keys_Init fV
+                        .even
+ 0000           _Keys_Init::
+ 0000                   .dbline -1
+ 0000                   .dbline 16
+ 0000           ; #include "keys.h"
+ 0000           ; #include "main.h"
+ 0000           ; #include "adc.h"
+ 0000           ; 
+ 0000           ; // 内部变量
+ 0000           ; static unsigned char key_open_debounce = 0;
+ 0000           ; static unsigned char key_short_debounce = 0;
+ 0000           ; static unsigned char key_clear_debounce = 0;
+ 0000           ; extern volatile unsigned int ADC_Values_0[4] ;
+ 0000           ; extern volatile unsigned int ADC_Values[4] ;
+ 0000           ; unsigned int sum[4]={0};
+ 0000           ; unsigned int ADC_buf[4]={0};
+ 0000           ; unsigned char i = 0;
+ 0000           ; unsigned char j = 0;
+ 0000           ; // 按键初始化
+ 0000           ; void Keys_Init(void) {
+ 0000                   .dbline 18
+ 0000           ;     // 设置PD2, PD3为输入（外接上拉电阻）
+ 0000           ;     DDRD &= ~((1 << KEY_OPEN) | (1 << KEY_SHORT));
+ 0000 81B3              in R24,0x11
+ 0002 837F              andi R24,243
+ 0004 81BB              out 0x11,R24
+ 0006                   .dbline 21
+ 0006           ;     
+ 0006           ;     // 设置PC4为输入（外接上拉电阻）
+ 0006           ;     DDRC &= ~(1 << KEY_CLEAR);
+ 0006 A498              cbi 0x14,4
+ 0008                   .dbline -2
+ 0008           L2:
+ 0008                   .dbline 0 ; func end
+ 0008 0895              ret
+ 000A                   .dbend
+                        .area data(ram, con, rel)
+ 0015                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0015           L4:
+ 0015                   .blkb 1
+                        .area idata
+ 0015 01                .byte 1
+                        .area data(ram, con, rel)
+ 0016                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0016           L5:
+ 0016                   .blkb 1
+                        .area idata
+ 0016 01                .byte 1
+                        .area data(ram, con, rel)
+ 0017                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 0017           L6:
+ 0017                   .blkb 1
+                        .area idata
+ 0017 01                .byte 1
+                        .area data(ram, con, rel)
+ 0018                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+                        .area text(rom, con, rel)
+ 000A                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+ 000A                   .dbfunc e Keys_Scan _Keys_Scan fV
+ 000A                   .dbsym s key_start_last L6 c
+ 000A                   .dbsym s key_short_last L5 c
+ 000A                   .dbsym s key_open_last L4 c
+ 000A           ; key_start_current -> R10
+ 000A           ; key_short_current -> R12
+ 000A           ; key_open_current -> R14
+                        .even
+ 000A           _Keys_Scan::
+ 000A 0E940000          xcall push_xgset30FC
+ 000E                   .dbline -1
+ 000E                   .dbline 29
+ 000E           ;     
+ 000E           ;     // 如果需要，可以启用内部上拉（如果外接上拉电阻，可以不启用）
+ 000E           ;     // PORTD |= (1 << KEY_OPEN) | (1 << KEY_SHORT);
+ 000E           ;     // PORTC |= (1 << KEY_CLEAR);
+ 000E           ; }
+ 000E           ; 
+ 000E           ; // 按键扫描函数
+ 000E           ; void Keys_Scan(void) {
+ 000E                   .dbline 36
+ 000E           ;     static unsigned char key_open_last = 1;
+ 000E           ;     static unsigned char key_short_last = 1;
+ 000E           ;     static unsigned char key_start_last = 1;
+ 000E           ;     unsigned char key_open_current, key_short_current, key_start_current;
+ 000E           ;     
+ 000E           ;     // 读取当前按键状态（按键按下为0，释放为1）
+ 000E           ;     key_open_current = (PIND & (1 << KEY_OPEN)) ? 1 : 0;
+ 000E 829B              sbis 0x10,2
+ 0010 03C0              rjmp L7
+ 0012           X0:
+ 0012 41E0              ldi R20,1
+ 0014 50E0              ldi R21,0
+ 0016 02C0              xjmp L8
+ 0018           L7:
+ 0018 4427              clr R20
+ 001A 5527              clr R21
+ 001C           L8:
+ 001C E42E              mov R14,R20
+ 001E                   .dbline 37
+ 001E           ;     key_short_current = (PIND & (1 << KEY_SHORT)) ? 1 : 0;
+ 001E 839B              sbis 0x10,3
+ 0020 03C0              rjmp L9
+ 0022           X1:
+ 0022 41E0              ldi R20,1
+ 0024 50E0              ldi R21,0
+ 0026 02C0              xjmp L10
+ 0028           L9:
+ 0028 4427              clr R20
+ 002A 5527              clr R21
+ 002C           L10:
+ 002C C42E              mov R12,R20
+ 002E                   .dbline 38
+ 002E           ;     key_start_current = (PINC & (1 << KEY_CLEAR)) ? 1 : 0;
+ 002E 9C9B              sbis 0x13,4
+ 0030 03C0              rjmp L11
+ 0032           X2:
+ 0032 41E0              ldi R20,1
+ 0034 50E0              ldi R21,0
+ 0036 02C0              xjmp L12
+ 0038           L11:
+ 0038 4427              clr R20
+ 003A 5527              clr R21
+ 003C           L12:
+ 003C A42E              mov R10,R20
+ 003E                   .dbline 41
+ 003E           ;     
+ 003E           ;     // D2按键处理（开路检测）
+ 003E           ;     if(key_open_current == 0 && key_open_last == 1) {  // 下降沿检测
+ 003E EE20              tst R14
+ 0040 59F4              brne L13
+ 0042           X3:
+ 0042 80911500          lds R24,L4
+ 0046 8130              cpi R24,1
+ 0048 39F4              brne L13
+ 004A           X4:
+ 004A                   .dbline 41
+ 004A                   .dbline 42
+ 004A           ;         if(key_open_debounce == 0) {
+ 004A 20900000          lds R2,_key_open_debounce
+ 004E 2220              tst R2
+ 0050 19F4              brne L15
+ 0052           X5:
+ 0052                   .dbline 42
+ 0052                   .dbline 43
+ 0052           ;             key_open_debounce = 10;  // 启动消抖计时
+ 0052 8AE0              ldi R24,10
+ 0054 80930000          sts _key_open_debounce,R24
+ 0058                   .dbline 44
+ 0058           ;         }
+ 0058           L15:
+ 0058                   .dbline 45
+ 0058           ;     }
+ 0058           L13:
+ 0058                   .dbline 47
+ 0058           ;     
+ 0058           ;     if(key_open_debounce > 0) {
+ 0058 80E0              ldi R24,0
+ 005A 20900000          lds R2,_key_open_debounce
+ 005E 8215              cp R24,R2
+ 0060 08F0              brlo X27
+ 0062 92C0              xjmp L17
+ 0064           X27:
+ 0064           X6:
+ 0064                   .dbline 47
+ 0064                   .dbline 48
+ 0064           ;         key_open_debounce--;
+ 0064 822D              mov R24,R2
+ 0066 8150              subi R24,1
+ 0068 80930000          sts _key_open_debounce,R24
+ 006C                   .dbline 49
+ 006C           ;         if(key_open_debounce == 0) {
+ 006C 8823              tst R24
+ 006E 09F0              breq X28
+ 0070 8BC0              xjmp L19
+ 0072           X28:
+ 0072           X7:
+ 0072                   .dbline 49
+ 0072                   .dbline 51
+ 0072           ;             // 再次检测按键状态，确认按下
+ 0072           ;             if((PIND & (1 << KEY_OPEN)) == 0) {
+ 0072 8299              sbic 0x10,2
+ 0074 89C0              rjmp L21
+ 0076           X8:
+ 0076                   .dbline 51
+ 0076                   .dbline 52
+ 0076           ;                for( i = 0; i < 10; i++) {
+ 0076 2224              clr R2
+ 0078 20921300          sts _i,R2
+ 007C 3AC0              xjmp L26
+ 007E           L23:
+ 007E                   .dbline 52
+ 007E                   .dbline 53
+ 007E           ;                                       sum[0] += ADC_ReadChannel(0);  // 通道0
+ 007E 0027              clr R16
+ 0080 0E940000          xcall _ADC_ReadChannel
+ 0084 20900300          lds R2,_sum
+ 0088 30900400          lds R3,_sum+1
+ 008C 200E              add R2,R16
+ 008E 311E              adc R3,R17
+ 0090 30920400          sts _sum+1,R3
+ 0094 20920300          sts _sum,R2
+ 0098                   .dbline 54
+ 0098           ;                                       sum[1] += ADC_ReadChannel(1);  // 通道1
+ 0098 01E0              ldi R16,1
+ 009A 0E940000          xcall _ADC_ReadChannel
+ 009E 20900500          lds R2,_sum+2
+ 00A2 30900600          lds R3,_sum+2+1
+ 00A6 200E              add R2,R16
+ 00A8 311E              adc R3,R17
+ 00AA 30920600          sts _sum+2+1,R3
+ 00AE 20920500          sts _sum+2,R2
+ 00B2                   .dbline 55
+ 00B2           ;                                       sum[2] += ADC_ReadChannel(2);  // 通道2
+ 00B2 02E0              ldi R16,2
+ 00B4 0E940000          xcall _ADC_ReadChannel
+ 00B8 20900700          lds R2,_sum+4
+ 00BC 30900800          lds R3,_sum+4+1
+ 00C0 200E              add R2,R16
+ 00C2 311E              adc R3,R17
+ 00C4 30920800          sts _sum+4+1,R3
+ 00C8 20920700          sts _sum+4,R2
+ 00CC                   .dbline 56
+ 00CC           ;                                       sum[3] += ADC_ReadChannel(3);  // 通道3
+ 00CC 03E0              ldi R16,3
+ 00CE 0E940000          xcall _ADC_ReadChannel
+ 00D2 A801              movw R20,R16
+ 00D4 20900900          lds R2,_sum+6
+ 00D8 30900A00          lds R3,_sum+6+1
+ 00DC 200E              add R2,R16
+ 00DE 311E              adc R3,R17
+ 00E0 30920A00          sts _sum+6+1,R3
+ 00E4 20920900          sts _sum+6,R2
+ 00E8                   .dbline 57
+ 00E8           ;                               }
+ 00E8           L24:
+ 00E8                   .dbline 52
+ 00E8 80911300          lds R24,_i
+ 00EC 8F5F              subi R24,255    ; addi 1
+ 00EE 80931300          sts _i,R24
+ 00F2           L26:
+ 00F2                   .dbline 52
+ 00F2 80911300          lds R24,_i
+ 00F6 8A30              cpi R24,10
+ 00F8 10F2              brlo L23
+ 00FA           X9:
+ 00FA                   .dbline 61
+ 00FA           ;                                               
+ 00FA           ;                                       
+ 00FA           ;                               // 计算平均值
+ 00FA           ;                                       ADC_Values[0] = sum[0]/10;  // 通道0平均值
+ 00FA 2AE0              ldi R18,10
+ 00FC 30E0              ldi R19,0
+ 00FE 00910300          lds R16,_sum
+ 0102 10910400          lds R17,_sum+1
+ 0106 0E940000          xcall div16u
+ 010A 10930100          sts _ADC_Values+1,R17
+ 010E 00930000          sts _ADC_Values,R16
+ 0112                   .dbline 62
+ 0112           ;                                       ADC_Values[1] = sum[1]/10;  // 通道1平均值
+ 0112 2AE0              ldi R18,10
+ 0114 30E0              ldi R19,0
+ 0116 00910500          lds R16,_sum+2
+ 011A 10910600          lds R17,_sum+2+1
+ 011E 0E940000          xcall div16u
+ 0122 10930300          sts _ADC_Values+2+1,R17
+ 0126 00930200          sts _ADC_Values+2,R16
+ 012A                   .dbline 63
+ 012A           ;                                       ADC_Values[2] = sum[2]/10;  // 通道2平均值
+ 012A 2AE0              ldi R18,10
+ 012C 30E0              ldi R19,0
+ 012E 00910700          lds R16,_sum+4
+ 0132 10910800          lds R17,_sum+4+1
+ 0136 0E940000          xcall div16u
+ 013A 10930500          sts _ADC_Values+4+1,R17
+ 013E 00930400          sts _ADC_Values+4,R16
+ 0142                   .dbline 64
+ 0142           ;                                       ADC_Values[3] = sum[3]/10;  // 通道3平均值
+ 0142 2AE0              ldi R18,10
+ 0144 30E0              ldi R19,0
+ 0146 00910900          lds R16,_sum+6
+ 014A 10910A00          lds R17,_sum+6+1
+ 014E 0E940000          xcall div16u
+ 0152 10930700          sts _ADC_Values+6+1,R17
+ 0156 00930600          sts _ADC_Values+6,R16
+ 015A                   .dbline 65
+ 015A           ;                                       sum[0] = 0;  // 通道0
+ 015A 2224              clr R2
+ 015C 3324              clr R3
+ 015E 30920400          sts _sum+1,R3
+ 0162 20920300          sts _sum,R2
+ 0166                   .dbline 66
+ 0166           ;                               sum[1] = 0;  // 通道1
+ 0166 30920600          sts _sum+2+1,R3
+ 016A 20920500          sts _sum+2,R2
+ 016E                   .dbline 67
+ 016E           ;                               sum[2] = 0;  // 通道2
+ 016E 30920800          sts _sum+4+1,R3
+ 0172 20920700          sts _sum+4,R2
+ 0176                   .dbline 68
+ 0176           ;                               sum[3] = 0;  // 通道3
+ 0176 30920A00          sts _sum+6+1,R3
+ 017A 20920900          sts _sum+6,R2
+ 017E                   .dbline 69
+ 017E           ;                                       Key_Flags |= FLAG_OPEN_TEST;
+ 017E 80910000          lds R24,_Key_Flags
+ 0182 8160              ori R24,1
+ 0184 80930000          sts _Key_Flags,R24
+ 0188                   .dbline 70
+ 0188           ;             }
+ 0188           L21:
+ 0188                   .dbline 71
+ 0188           ;         }
+ 0188           L19:
+ 0188                   .dbline 72
+ 0188           ;     }
+ 0188           L17:
+ 0188                   .dbline 75
+ 0188           ;     
+ 0188           ;     // D3按键处理（短路检测）
+ 0188           ;     if(key_short_current == 0 && key_short_last == 1) {  // 下降沿检测
+ 0188 CC20              tst R12
+ 018A 59F4              brne L39
+ 018C           X10:
+ 018C 80911600          lds R24,L5
+ 0190 8130              cpi R24,1
+ 0192 39F4              brne L39
+ 0194           X11:
+ 0194                   .dbline 75
+ 0194                   .dbline 76
+ 0194           ;         if(key_short_debounce == 0) {
+ 0194 20900100          lds R2,_key_short_debounce
+ 0198 2220              tst R2
+ 019A 19F4              brne L41
+ 019C           X12:
+ 019C                   .dbline 76
+ 019C                   .dbline 77
+ 019C           ;             key_short_debounce = 10;  // 启动消抖计时
+ 019C 8AE0              ldi R24,10
+ 019E 80930100          sts _key_short_debounce,R24
+ 01A2                   .dbline 78
+ 01A2           ;         }
+ 01A2           L41:
+ 01A2                   .dbline 79
+ 01A2           ;     }
+ 01A2           L39:
+ 01A2                   .dbline 81
+ 01A2           ;     
+ 01A2           ;     if(key_short_debounce > 0) {
+ 01A2 80E0              ldi R24,0
+ 01A4 20900100          lds R2,_key_short_debounce
+ 01A8 8215              cp R24,R2
+ 01AA 08F0              brlo X29
+ 01AC ACC0              xjmp L43
+ 01AE           X29:
+ 01AE           X13:
+ 01AE                   .dbline 81
+ 01AE                   .dbline 82
+ 01AE           ;         key_short_debounce--;
+ 01AE 822D              mov R24,R2
+ 01B0 8150              subi R24,1
+ 01B2 80930100          sts _key_short_debounce,R24
+ 01B6                   .dbline 83
+ 01B6           ;         if(key_short_debounce == 0) {
+ 01B6 8823              tst R24
+ 01B8 09F0              breq X30
+ 01BA A5C0              xjmp L45
+ 01BC           X30:
+ 01BC           X14:
+ 01BC                   .dbline 83
+ 01BC                   .dbline 85
+ 01BC           ;             // 再次检测按键状态，确认按下
+ 01BC           ;             if((PIND & (1 << KEY_SHORT)) == 0) {
+ 01BC 8399              sbic 0x10,3
+ 01BE A3C0              rjmp L47
+ 01C0           X15:
+ 01C0                   .dbline 85
+ 01C0                   .dbline 89
+ 01C0           ;                 // 执行短路检测
+ 01C0           ;                /* ADC_Values_0[2]=ADC_ReadChannel(2);
+ 01C0           ;                               ADC_Values_0[3]=ADC_ReadChannel(3);*/
+ 01C0           ;                               for( i = 0; i < 10; i++) {
+ 01C0 2224              clr R2
+ 01C2 20921300          sts _i,R2
+ 01C6 3AC0              xjmp L52
+ 01C8           L49:
+ 01C8                   .dbline 89
+ 01C8                   .dbline 90
+ 01C8           ;                                       sum[0] += ADC_ReadChannel(0);  // 通道0
+ 01C8 0027              clr R16
+ 01CA 0E940000          xcall _ADC_ReadChannel
+ 01CE 20900300          lds R2,_sum
+ 01D2 30900400          lds R3,_sum+1
+ 01D6 200E              add R2,R16
+ 01D8 311E              adc R3,R17
+ 01DA 30920400          sts _sum+1,R3
+ 01DE 20920300          sts _sum,R2
+ 01E2                   .dbline 91
+ 01E2           ;                                       sum[1] += ADC_ReadChannel(1);  // 通道1
+ 01E2 01E0              ldi R16,1
+ 01E4 0E940000          xcall _ADC_ReadChannel
+ 01E8 20900500          lds R2,_sum+2
+ 01EC 30900600          lds R3,_sum+2+1
+ 01F0 200E              add R2,R16
+ 01F2 311E              adc R3,R17
+ 01F4 30920600          sts _sum+2+1,R3
+ 01F8 20920500          sts _sum+2,R2
+ 01FC                   .dbline 92
+ 01FC           ;                                       sum[2] += ADC_ReadChannel(2);  // 通道2
+ 01FC 02E0              ldi R16,2
+ 01FE 0E940000          xcall _ADC_ReadChannel
+ 0202 20900700          lds R2,_sum+4
+ 0206 30900800          lds R3,_sum+4+1
+ 020A 200E              add R2,R16
+ 020C 311E              adc R3,R17
+ 020E 30920800          sts _sum+4+1,R3
+ 0212 20920700          sts _sum+4,R2
+ 0216                   .dbline 93
+ 0216           ;                                       sum[3] += ADC_ReadChannel(3);  // 通道3
+ 0216 03E0              ldi R16,3
+ 0218 0E940000          xcall _ADC_ReadChannel
+ 021C A801              movw R20,R16
+ 021E 20900900          lds R2,_sum+6
+ 0222 30900A00          lds R3,_sum+6+1
+ 0226 200E              add R2,R16
+ 0228 311E              adc R3,R17
+ 022A 30920A00          sts _sum+6+1,R3
+ 022E 20920900          sts _sum+6,R2
+ 0232                   .dbline 94
+ 0232           ;                               }
+ 0232           L50:
+ 0232                   .dbline 89
+ 0232 80911300          lds R24,_i
+ 0236 8F5F              subi R24,255    ; addi 1
+ 0238 80931300          sts _i,R24
+ 023C           L52:
+ 023C                   .dbline 89
+ 023C 80911300          lds R24,_i
+ 0240 8A30              cpi R24,10
+ 0242 10F2              brlo L49
+ 0244           X16:
+ 0244                   .dbline 95
+ 0244           ;                                               for(j=0;j<4;j++)
+ 0244 2224              clr R2
+ 0246 20921400          sts _j,R2
+ 024A 41C0              xjmp L59
+ 024C           L56:
+ 024C                   .dbline 96
+ 024C           ;                                               {
+ 024C                   .dbline 97
+ 024C           ;                                                 ADC_buf[j] = sum[j]/10;  // 通道0平均值
+ 024C 40911400          lds R20,_j
+ 0250 5527              clr R21
+ 0252 440F              lsl R20
+ 0254 551F              rol R21
+ 0256 80E0              ldi R24,<_sum
+ 0258 90E0              ldi R25,>_sum
+ 025A FA01              movw R30,R20
+ 025C E80F              add R30,R24
+ 025E F91F              adc R31,R25
+ 0260 0081              ldd R16,z+0
+ 0262 1181              ldd R17,z+1
+ 0264 2AE0              ldi R18,10
+ 0266 30E0              ldi R19,0
+ 0268 0E940000          xcall div16u
+ 026C 80E0              ldi R24,<_ADC_buf
+ 026E 90E0              ldi R25,>_ADC_buf
+ 0270 FA01              movw R30,R20
+ 0272 E80F              add R30,R24
+ 0274 F91F              adc R31,R25
+ 0276 1183              std z+1,R17
+ 0278 0083              std z+0,R16
+ 027A                   .dbline 98
+ 027A           ;                                                 if(450<ADC_buf[j]&&ADC_buf[j]<550){
+ 027A E0911400          lds R30,_j
+ 027E FF27              clr R31
+ 0280 EE0F              lsl R30
+ 0282 FF1F              rol R31
+ 0284 E80F              add R30,R24
+ 0286 F91F              adc R31,R25
+ 0288 4081              ldd R20,z+0
+ 028A 5181              ldd R21,z+1
+ 028C 82EC              ldi R24,450
+ 028E 91E0              ldi R25,1
+ 0290 8417              cp R24,R20
+ 0292 9507              cpc R25,R21
+ 0294 B8F4              brsh L60
+ 0296           X17:
+ 0296 4632              cpi R20,38
+ 0298 E2E0              ldi R30,2
+ 029A 5E07              cpc R21,R30
+ 029C 98F4              brsh L60
+ 029E           X18:
+ 029E                   .dbline 98
+ 029E                   .dbline 99
+ 029E           ;                                                       ADC_Values_0[j]=ADC_buf[j];              
+ 029E 40911400          lds R20,_j
+ 02A2 5527              clr R21
+ 02A4 440F              lsl R20
+ 02A6 551F              rol R21
+ 02A8 80E0              ldi R24,<_ADC_buf
+ 02AA 90E0              ldi R25,>_ADC_buf
+ 02AC FA01              movw R30,R20
+ 02AE E80F              add R30,R24
+ 02B0 F91F              adc R31,R25
+ 02B2 2080              ldd R2,z+0
+ 02B4 3180              ldd R3,z+1
+ 02B6 80E0              ldi R24,<_ADC_Values_0
+ 02B8 90E0              ldi R25,>_ADC_Values_0
+ 02BA FA01              movw R30,R20
+ 02BC E80F              add R30,R24
+ 02BE F91F              adc R31,R25
+ 02C0 3182              std z+1,R3
+ 02C2 2082              std z+0,R2
+ 02C4                   .dbline 100
+ 02C4           ;                                                 }
+ 02C4           L60:
+ 02C4                   .dbline 101
+ 02C4           ;                                               }
+ 02C4           L57:
+ 02C4                   .dbline 95
+ 02C4 80911400          lds R24,_j
+ 02C8 8F5F              subi R24,255    ; addi 1
+ 02CA 80931400          sts _j,R24
+ 02CE           L59:
+ 02CE                   .dbline 95
+ 02CE 80911400          lds R24,_j
+ 02D2 8430              cpi R24,4
+ 02D4 08F4              brsh X31
+ 02D6 BACF              xjmp L56
+ 02D8           X31:
+ 02D8           X19:
+ 02D8                   .dbline 103
+ 02D8           ;                               // 计算平均值
+ 02D8           ;                                       sum[0] = 0;  // 通道0
+ 02D8 2224              clr R2
+ 02DA 3324              clr R3
+ 02DC 30920400          sts _sum+1,R3
+ 02E0 20920300          sts _sum,R2
+ 02E4                   .dbline 104
+ 02E4           ;                               sum[1] = 0;  // 通道1
+ 02E4 30920600          sts _sum+2+1,R3
+ 02E8 20920500          sts _sum+2,R2
+ 02EC                   .dbline 105
+ 02EC           ;                               sum[2] = 0;  // 通道2
+ 02EC 30920800          sts _sum+4+1,R3
+ 02F0 20920700          sts _sum+4,R2
+ 02F4                   .dbline 106
+ 02F4           ;                               sum[3] = 0;  // 通道3
+ 02F4 30920A00          sts _sum+6+1,R3
+ 02F8 20920900          sts _sum+6,R2
+ 02FC                   .dbline 108
+ 02FC           ;                                       
+ 02FC           ;                 Key_Flags |= FLAG_SHORT_TEST;
+ 02FC 80910000          lds R24,_Key_Flags
+ 0300 8260              ori R24,2
+ 0302 80930000          sts _Key_Flags,R24
+ 0306                   .dbline 109
+ 0306           ;             }
+ 0306           L47:
+ 0306                   .dbline 110
+ 0306           ;         }
+ 0306           L45:
+ 0306                   .dbline 111
+ 0306           ;     }
+ 0306           L43:
+ 0306                   .dbline 114
+ 0306           ;     
+ 0306           ;     // C4按键处理
+ 0306           ;     if(key_start_current == 0 && key_start_last == 1) {
+ 0306 AA20              tst R10
+ 0308 59F4              brne L65
+ 030A           X20:
+ 030A 80911700          lds R24,L6
+ 030E 8130              cpi R24,1
+ 0310 39F4              brne L65
+ 0312           X21:
+ 0312                   .dbline 114
+ 0312                   .dbline 115
+ 0312           ;         if(key_clear_debounce == 0) {
+ 0312 20900200          lds R2,_key_clear_debounce
+ 0316 2220              tst R2
+ 0318 19F4              brne L67
+ 031A           X22:
+ 031A                   .dbline 115
+ 031A                   .dbline 116
+ 031A           ;             key_clear_debounce = 10;  // 启动消抖计时
+ 031A 8AE0              ldi R24,10
+ 031C 80930200          sts _key_clear_debounce,R24
+ 0320                   .dbline 118
+ 0320           ;                       
+ 0320           ;         }
+ 0320           L67:
+ 0320                   .dbline 119
+ 0320           ;     }
+ 0320           L65:
+ 0320                   .dbline 121
+ 0320           ;     
+ 0320           ;     if(key_clear_debounce > 0) {
+ 0320 80E0              ldi R24,0
+ 0322 20900200          lds R2,_key_clear_debounce
+ 0326 8215              cp R24,R2
+ 0328 08F0              brlo X32
+ 032A 60C0              xjmp L69
+ 032C           X32:
+ 032C           X23:
+ 032C                   .dbline 121
+ 032C                   .dbline 122
+ 032C           ;         key_clear_debounce--;
+ 032C 822D              mov R24,R2
+ 032E 8150              subi R24,1
+ 0330 80930200          sts _key_clear_debounce,R24
+ 0334                   .dbline 123
+ 0334           ;         if(key_clear_debounce == 0) {
+ 0334 8823              tst R24
+ 0336 09F0              breq X33
+ 0338 59C0              xjmp L71
+ 033A           X33:
+ 033A           X24:
+ 033A                   .dbline 123
+ 033A                   .dbline 125
+ 033A           ;             // 再次检测按键状态，确认按下
+ 033A           ;             if((PINC & (1 << KEY_CLEAR)) == 0) {
+ 033A 9C99              sbic 0x13,4
+ 033C 57C0              rjmp L73
+ 033E           X25:
+ 033E                   .dbline 125
+ 033E                   .dbline 126
+ 033E           ;                 for( i = 0; i < 10; i++) {
+ 033E 2224              clr R2
+ 0340 20921300          sts _i,R2
+ 0344 20C0              xjmp L78
+ 0346           L75:
+ 0346                   .dbline 126
+ 0346                   .dbline 127
+ 0346           ;                                       sum[0] += ADC_ReadChannel(0);  // 通道0
+ 0346 0027              clr R16
+ 0348 0E940000          xcall _ADC_ReadChannel
+ 034C 20900300          lds R2,_sum
+ 0350 30900400          lds R3,_sum+1
+ 0354 200E              add R2,R16
+ 0356 311E              adc R3,R17
+ 0358 30920400          sts _sum+1,R3
+ 035C 20920300          sts _sum,R2
+ 0360                   .dbline 128
+ 0360           ;                                       sum[1] += ADC_ReadChannel(1);  // 通道1
+ 0360 01E0              ldi R16,1
+ 0362 0E940000          xcall _ADC_ReadChannel
+ 0366 A801              movw R20,R16
+ 0368 20900500          lds R2,_sum+2
+ 036C 30900600          lds R3,_sum+2+1
+ 0370 200E              add R2,R16
+ 0372 311E              adc R3,R17
+ 0374 30920600          sts _sum+2+1,R3
+ 0378 20920500          sts _sum+2,R2
+ 037C                   .dbline 131
+ 037C           ;                                       //sum[2] += ADC_ReadChannel(2);  // 通道2
+ 037C           ;                                       //sum[3] += ADC_ReadChannel(3);  // 通道3
+ 037C           ;                               }
+ 037C           L76:
+ 037C                   .dbline 126
+ 037C 80911300          lds R24,_i
+ 0380 8F5F              subi R24,255    ; addi 1
+ 0382 80931300          sts _i,R24
+ 0386           L78:
+ 0386                   .dbline 126
+ 0386 80911300          lds R24,_i
+ 038A 8A30              cpi R24,10
+ 038C E0F2              brlo L75
+ 038E           X26:
+ 038E                   .dbline 134
+ 038E           ;                               
+ 038E           ;                               // 计算平均值
+ 038E           ;                                       ADC_Values_0[0] = sum[0]/10;  // 通道0平均值
+ 038E 2AE0              ldi R18,10
+ 0390 30E0              ldi R19,0
+ 0392 00910300          lds R16,_sum
+ 0396 10910400          lds R17,_sum+1
+ 039A 0E940000          xcall div16u
+ 039E 10930100          sts _ADC_Values_0+1,R17
+ 03A2 00930000          sts _ADC_Values_0,R16
+ 03A6                   .dbline 135
+ 03A6           ;                                       ADC_Values_0[1] = sum[1]/10;  // 通道1平均值
+ 03A6 2AE0              ldi R18,10
+ 03A8 30E0              ldi R19,0
+ 03AA 00910500          lds R16,_sum+2
+ 03AE 10910600          lds R17,_sum+2+1
+ 03B2 0E940000          xcall div16u
+ 03B6 10930300          sts _ADC_Values_0+2+1,R17
+ 03BA 00930200          sts _ADC_Values_0+2,R16
+ 03BE                   .dbline 138
+ 03BE           ;                                       //ADC_Values[2] = sum[2]/10;  // 通道2平均值
+ 03BE           ;                                       //ADC_Values[3] = sum[3]/10;  // 通道3平均值
+ 03BE           ;                                       sum[0] = 0;  // 通道0
+ 03BE 2224              clr R2
+ 03C0 3324              clr R3
+ 03C2 30920400          sts _sum+1,R3
+ 03C6 20920300          sts _sum,R2
+ 03CA                   .dbline 139
+ 03CA           ;                               sum[1] = 0;  // 通道1
+ 03CA 30920600          sts _sum+2+1,R3
+ 03CE 20920500          sts _sum+2,R2
+ 03D2                   .dbline 140
+ 03D2           ;                               sum[2] = 0;  // 通道2
+ 03D2 30920800          sts _sum+4+1,R3
+ 03D6 20920700          sts _sum+4,R2
+ 03DA                   .dbline 141
+ 03DA           ;                               sum[3] = 0;  // 通道3
+ 03DA 30920A00          sts _sum+6+1,R3
+ 03DE 20920900          sts _sum+6,R2
+ 03E2                   .dbline 143
+ 03E2           ;                 
+ 03E2           ;                               Key_Flags |= FLAG_START;
+ 03E2 80910000          lds R24,_Key_Flags
+ 03E6 8460              ori R24,4
+ 03E8 80930000          sts _Key_Flags,R24
+ 03EC                   .dbline 144
+ 03EC           ;             }
+ 03EC           L73:
+ 03EC                   .dbline 145
+ 03EC           ;         }
+ 03EC           L71:
+ 03EC                   .dbline 146
+ 03EC           ;     }
+ 03EC           L69:
+ 03EC                   .dbline 150
+ 03EC           ;       
+ 03EC           ;     
+ 03EC           ;     // 更新上一次按键状态
+ 03EC           ;     key_open_last = key_open_current;
+ 03EC E0921500          sts L4,R14
+ 03F0                   .dbline 151
+ 03F0           ;     key_short_last = key_short_current;
+ 03F0 C0921600          sts L5,R12
+ 03F4                   .dbline 152
+ 03F4           ;     key_start_last = key_start_current;
+ 03F4 A0921700          sts L6,R10
+ 03F8                   .dbline -2
+ 03F8           L3:
+ 03F8                   .dbline 0 ; func end
+ 03F8 0C940000          xjmp pop_xgset30FC
+ 03FC                   .dbsym r key_start_current 10 c
+ 03FC                   .dbsym r key_short_current 12 c
+ 03FC                   .dbsym r key_open_current 14 c
+ 03FC                   .dbend
+ 03FC                   .dbfunc e Clear_ADC_Data _Clear_ADC_Data fV
+ 03FC           ;              i -> R16
+                        .even
+ 03FC           _Clear_ADC_Data::
+ 03FC                   .dbline -1
+ 03FC                   .dbline 156
+ 03FC           ; }
+ 03FC           ; 
+ 03FC           ; // 清除ADC数据
+ 03FC           ; void Clear_ADC_Data(void) {
+ 03FC                   .dbline 158
+ 03FC           ;     unsigned char i;
+ 03FC           ;     for(i = 0; i < ADC_DATA_SIZE; i++) {
+ 03FC 0027              clr R16
+ 03FE 0DC0              xjmp L89
+ 0400           L86:
+ 0400                   .dbline 158
+ 0400                   .dbline 159
+ 0400           ;         ADC_Values_0[i] = 0;
+ 0400 80E0              ldi R24,<_ADC_Values_0
+ 0402 90E0              ldi R25,>_ADC_Values_0
+ 0404 E02F              mov R30,R16
+ 0406 FF27              clr R31
+ 0408 EE0F              lsl R30
+ 040A FF1F              rol R31
+ 040C E80F              add R30,R24
+ 040E F91F              adc R31,R25
+ 0410 2224              clr R2
+ 0412 3324              clr R3
+ 0414 3182              std z+1,R3
+ 0416 2082              std z+0,R2
+ 0418                   .dbline 160
+ 0418           ;     }
+ 0418           L87:
+ 0418                   .dbline 158
+ 0418 0395              inc R16
+ 041A           L89:
+ 041A                   .dbline 158
+ 041A 0430              cpi R16,4
+ 041C 88F3              brlo L86
+ 041E           X34:
+ 041E                   .dbline 161
+ 041E           ;     Key_Flags = FLAG_NONE;
+ 041E 2224              clr R2
+ 0420 20920000          sts _Key_Flags,R2
+ 0424                   .dbline -2
+ 0424           L85:
+ 0424                   .dbline 0 ; func end
+ 0424 0895              ret
+ 0426                   .dbsym r i 16 c
+ 0426                   .dbend
+ 0426           ; }

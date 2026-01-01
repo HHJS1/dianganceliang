@@ -1,0 +1,89 @@
+#include "adc.h"
+#include "main.h"
+
+// 通道索引
+static unsigned char current_channel = 0;
+
+void ADC_Init(void) {
+    // 使能ADC，设置预分频为128（16MHz/128 = 125kHz）
+    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+    
+    // 使用AVCC作为参考电压，右对齐结果
+    ADMUX = (1 << REFS0);
+}
+
+void ADC_StartContinuousConversion(void) {
+    // 清除通道选择位
+    ADMUX &= 0xF0;
+    
+    // 选择第一个通道
+    ADMUX |= (current_channel & 0x0F);
+    
+    // 使能ADC完成中断
+    ADCSRA |= (1 << ADIE);
+    
+    // 开始第一次转换
+    ADCSRA |= (1 << ADSC);
+}
+
+unsigned int ADC_ReadChannel(unsigned char channel) {
+   
+    unsigned char low;
+    unsigned char high;
+    // 确保通道号在0-7之间
+	
+    channel &= 0x07;
+    
+    // 选择通道
+    ADMUX = (ADMUX & 0xF0) | channel;
+    
+    // 开始转换
+    ADCSRA |= (1 << ADSC);
+    
+    // 等待转换完成
+    while (!(ADCSRA & (1 << ADIF)));
+    
+    // 清除转换完成标志
+    ADCSRA |= (1 << ADIF);
+    
+    // 读取ADC值（10位）
+     low = ADCL;
+     high = ADCH;
+    return (high << 8) | low;
+}
+
+void ADC_StopContinuousConversion(void) {
+    // 禁用ADC完成中断
+    ADCSRA &= ~(1 << ADIE);
+}
+
+float ADC_ToVoltage(unsigned int adc_value) {
+    // 假设参考电压为5V，ADC为10位（0-1023）
+    return (adc_value * 5.0) / 1023.0;
+}
+
+// ICC AVR中断服务函数的写法
+// ADC中断服务函数
+#pragma interrupt_handler ADC_ISR:iv_ADC
+void ADC_ISR(void) {
+    // 读取ADC值（先读ADCL，再读ADCH）
+    unsigned char low = ADCL;
+    unsigned char high = ADCH;
+    unsigned int adc_value = (high << 8) | low;
+    
+    // 存储到对应通道
+    ADC_Values[current_channel] = adc_value;
+    
+    // 切换到下一个通道（0-3循环）
+    current_channel++;
+    if(current_channel > 3) {
+        current_channel = 0;
+        ADC_Ready = 1;  // 4个通道都采集完成
+    }
+    
+    // 设置下一个通道
+    ADMUX = (ADMUX & 0xF0) | (current_channel & 0x0F);
+    
+    // 开始下一次转换
+    ADCSRA |= (1 << ADSC);
+}

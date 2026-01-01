@@ -1,0 +1,1461 @@
+                        .module main.c
+                        .area text(rom, con, rel)
+ 0000                   .dbfile source\main.c
+                        .area data(ram, con, rel)
+ 0000                   .dbfile source\main.c
+ 0000           _ADC_Values::
+ 0000                   .blkb 2
+                        .area idata
+ 0000 0000              .word 0
+                        .area data(ram, con, rel)
+ 0002                   .dbfile source\main.c
+ 0002                   .blkb 6
+                        .area idata
+ 0002 000000000000      .byte 0,0,0,0,0,0
+                        .area data(ram, con, rel)
+ 0008                   .dbfile source\main.c
+ 0008                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0008                   .dbsym e ADC_Values _ADC_Values A[8:4]i
+ 0008           _ADC_Values_0::
+ 0008                   .blkb 2
+                        .area idata
+ 0008 0000              .word 0
+                        .area data(ram, con, rel)
+ 000A                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 000A                   .blkb 6
+                        .area idata
+ 000A 000000000000      .byte 0,0,0,0,0,0
+                        .area data(ram, con, rel)
+ 0010                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0010                   .dbsym e ADC_Values_0 _ADC_Values_0 A[8:4]i
+ 0010           _ADC_Ready::
+ 0010                   .blkb 1
+                        .area idata
+ 0010 00                .byte 0
+                        .area data(ram, con, rel)
+ 0011                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0011                   .dbsym e ADC_Ready _ADC_Ready c
+ 0011           _Key_Flags::
+ 0011                   .blkb 1
+                        .area idata
+ 0011 00                .byte 0
+                        .area data(ram, con, rel)
+ 0012                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0012                   .dbsym e Key_Flags _Key_Flags c
+ 0012           _packet::
+ 0012                   .blkb 1
+                        .area idata
+ 0012 55                .byte 85
+                        .area data(ram, con, rel)
+ 0013                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0013                   .blkb 1
+                        .area idata
+ 0013 00                .byte 0
+                        .area data(ram, con, rel)
+ 0014                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0014                   .blkb 1
+                        .area idata
+ 0014 00                .byte 0
+                        .area data(ram, con, rel)
+ 0015                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0015                   .blkb 1
+                        .area idata
+ 0015 00                .byte 0
+                        .area data(ram, con, rel)
+ 0016                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0016                   .blkb 1
+                        .area idata
+ 0016 00                .byte 0
+                        .area data(ram, con, rel)
+ 0017                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0017                   .blkb 1
+                        .area idata
+ 0017 00                .byte 0
+                        .area data(ram, con, rel)
+ 0018                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0018                   .blkb 1
+                        .area idata
+ 0018 00                .byte 0
+                        .area data(ram, con, rel)
+ 0019                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0019                   .blkb 1
+                        .area idata
+ 0019 00                .byte 0
+                        .area data(ram, con, rel)
+ 001A                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 001A                   .blkb 1
+                        .area idata
+ 001A 00                .byte 0
+                        .area data(ram, con, rel)
+ 001B                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 001B                   .blkb 1
+                        .area idata
+ 001B 00                .byte 0
+                        .area data(ram, con, rel)
+ 001C                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 001C                   .blkb 1
+                        .area idata
+ 001C 00                .byte 0
+                        .area data(ram, con, rel)
+ 001D                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 001D                   .blkb 1
+                        .area idata
+ 001D 00                .byte 0
+                        .area data(ram, con, rel)
+ 001E                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 001E                   .blkb 1
+                        .area idata
+ 001E 00                .byte 0
+                        .area data(ram, con, rel)
+ 001F                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 001F                   .blkb 1
+                        .area idata
+ 001F 00                .byte 0
+                        .area data(ram, con, rel)
+ 0020                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0020                   .blkb 1
+                        .area idata
+ 0020 00                .byte 0
+                        .area data(ram, con, rel)
+ 0021                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0021                   .blkb 1
+                        .area idata
+ 0021 00                .byte 0
+                        .area data(ram, con, rel)
+ 0022                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0022                   .blkb 1
+                        .area idata
+ 0022 00                .byte 0
+                        .area data(ram, con, rel)
+ 0023                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0023                   .blkb 1
+                        .area idata
+ 0023 00                .byte 0
+                        .area data(ram, con, rel)
+ 0024                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0024                   .blkb 1
+                        .area idata
+ 0024 00                .byte 0
+                        .area data(ram, con, rel)
+ 0025                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0025                   .blkb 1
+                        .area idata
+ 0025 00                .byte 0
+                        .area data(ram, con, rel)
+ 0026                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0026                   .blkb 1
+                        .area idata
+ 0026 00                .byte 0
+                        .area data(ram, con, rel)
+ 0027                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0027                   .blkb 1
+                        .area idata
+ 0027 FF                .byte 255
+                        .area data(ram, con, rel)
+ 0028                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0028                   .dbstruct 0 22 .1
+ 0028                   .dbfield 0 header c
+ 0028                   .dbfield 1 adc0H c
+ 0028                   .dbfield 2 adc0L c
+ 0028                   .dbfield 3 adc1H c
+ 0028                   .dbfield 4 adc1L c
+ 0028                   .dbfield 5 adc2H c
+ 0028                   .dbfield 6 adc2L c
+ 0028                   .dbfield 7 adc3H c
+ 0028                   .dbfield 8 adc3L c
+ 0028                   .dbfield 9 adc00H c
+ 0028                   .dbfield 10 adc00L c
+ 0028                   .dbfield 11 adc10H c
+ 0028                   .dbfield 12 adc10L c
+ 0028                   .dbfield 13 adc20H c
+ 0028                   .dbfield 14 adc20L c
+ 0028                   .dbfield 15 adc30H c
+ 0028                   .dbfield 16 adc30L c
+ 0028                   .dbfield 17 LH c
+ 0028                   .dbfield 18 LL c
+ 0028                   .dbfield 19 QH c
+ 0028                   .dbfield 20 QL c
+ 0028                   .dbfield 21 footer c
+ 0028                   .dbend
+ 0028                   .dbsym e packet _packet S[.1]
+                        .area text(rom, con, rel)
+ 0000                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\main.c
+ 0000                   .dbfunc e Delay_ms _Delay_ms fV
+ 0000           ;              i -> R20,R21
+ 0000           ;              j -> R22,R23
+ 0000           ;             ms -> R16,R17
+                        .even
+ 0000           _Delay_ms::
+ 0000 0E940000          xcall push_xgsetF000
+ 0004                   .dbline -1
+ 0004                   .dbline 18
+ 0004           ; #include "main.h"
+ 0004           ; #include "uart.h"
+ 0004           ; #include "adc.h"
+ 0004           ; #include "keys.h"
+ 0004           ; 
+ 0004           ; // 全局变量定义
+ 0004           ; #pragma data:data  // 将变量放在数据段
+ 0004           ; volatile unsigned int ADC_Values[4] = {0};
+ 0004           ; volatile unsigned int ADC_Values_0[4] = {0};
+ 0004           ; volatile unsigned char ADC_Ready = 0;
+ 0004           ; 
+ 0004           ; unsigned char Key_Flags = FLAG_NONE;
+ 0004           ; 
+ 0004           ; DataPacket packet = {0x55,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0xFF};
+ 0004           ; #pragma data:data
+ 0004           ; 
+ 0004           ; // 简单的延时函数
+ 0004           ; void Delay_ms(unsigned int ms) {
+ 0004                   .dbline 20
+ 0004           ;     unsigned int i, j;
+ 0004           ;     for(i = 0; i < ms; i++) {
+ 0004 4427              clr R20
+ 0006 5527              clr R21
+ 0008 0CC0              xjmp L6
+ 000A           L3:
+ 000A                   .dbline 20
+ 000A                   .dbline 21
+ 000A           ;         for(j = 0; j < 1140; j++) {  // 16MHz时钟下的粗略延时
+ 000A 6627              clr R22
+ 000C 7727              clr R23
+ 000E 03C0              xjmp L10
+ 0010           L7:
+ 0010                   .dbline 21
+ 0010                   .dbline 22
+ 0010           ;             asm("nop");
+ 0010 0000              nop
+ 0012                   .dbline 23
+ 0012           ;         }
+ 0012           L8:
+ 0012                   .dbline 21
+ 0012 6F5F              subi R22,255  ; offset = 1
+ 0014 7F4F              sbci R23,255
+ 0016           L10:
+ 0016                   .dbline 21
+ 0016 6437              cpi R22,116
+ 0018 E4E0              ldi R30,4
+ 001A 7E07              cpc R23,R30
+ 001C C8F3              brlo L7
+ 001E           X0:
+ 001E                   .dbline 24
+ 001E           ;     }
+ 001E           L4:
+ 001E                   .dbline 20
+ 001E 4F5F              subi R20,255  ; offset = 1
+ 0020 5F4F              sbci R21,255
+ 0022           L6:
+ 0022                   .dbline 20
+ 0022 4017              cp R20,R16
+ 0024 5107              cpc R21,R17
+ 0026 88F3              brlo L3
+ 0028           X1:
+ 0028                   .dbline -2
+ 0028           L2:
+ 0028                   .dbline 0 ; func end
+ 0028 0C940000          xjmp pop_xgsetF000
+ 002C                   .dbsym r i 20 i
+ 002C                   .dbsym r j 22 i
+ 002C                   .dbsym r ms 16 i
+ 002C                   .dbend
+ 002C                   .dbfunc e GPIO_Init _GPIO_Init fV
+                        .even
+ 002C           _GPIO_Init::
+ 002C                   .dbline -1
+ 002C                   .dbline 28
+ 002C           ; }
+ 002C           ; 
+ 002C           ; 
+ 002C           ; void GPIO_Init(void) {
+ 002C                   .dbline 30
+ 002C           ;     // 将PD7设置为输出模式，其他位不变
+ 002C           ;     DDRD |= (1 << PD7);
+ 002C 8F9A              sbi 0x11,7
+ 002E                   .dbline 33
+ 002E           ;     
+ 002E           ;     // 将PD7初始化为低电平
+ 002E           ;     PORTD &= (1 << PD7);
+ 002E 82B3              in R24,0x12
+ 0030 8078              andi R24,128
+ 0032 82BB              out 0x12,R24
+ 0034                   .dbline -2
+ 0034           L11:
+ 0034                   .dbline 0 ; func end
+ 0034 0895              ret
+ 0036                   .dbend
+ 0036                   .dbfunc e main _main fI
+                        .even
+ 0036           _main::
+ 0036                   .dbline -1
+ 0036                   .dbline 38
+ 0036           ; }
+ 0036           ; 
+ 0036           ; 
+ 0036           ; 
+ 0036           ; int main(void) {
+ 0036                   .dbline 40
+ 0036           ;     // 系统初始化
+ 0036           ;     System_Init();
+ 0036 29D0              xcall _System_Init
+ 0038 26C0              xjmp L14
+ 003A           L13:
+ 003A                   .dbline 45
+ 003A           ;     
+ 003A           ;     // 启动ADC连续采样
+ 003A           ;     //ADC_StartContinuousConversion();
+ 003A           ;    
+ 003A           ;     while(1) {
+ 003A                   .dbline 47
+ 003A           ;       
+ 003A           ;               Keys_Scan();
+ 003A 0E940000          xcall _Keys_Scan
+ 003E                   .dbline 54
+ 003E           ;         // 处理ADC数据
+ 003E           ;         
+ 003E           ;         
+ 003E           ;         // 发送数据包
+ 003E           ;        
+ 003E           ;         // 根据标志位处理数据
+ 003E           ;         if(Key_Flags & FLAG_OPEN_TEST) {
+ 003E 20901100          lds R2,_Key_Flags
+ 0042 20FE              sbrs R2,0
+ 0044 07C0              rjmp L16
+ 0046           X2:
+ 0046                   .dbline 54
+ 0046                   .dbline 57
+ 0046           ;             // 开路检测完成，可以发送数据等操作
+ 0046           ;             // 发送数据包
+ 0046           ;                       Process_ADC_Data();
+ 0046 29D0              xcall _Process_ADC_Data
+ 0048                   .dbline 58
+ 0048           ;             Key_Flags &= ~FLAG_OPEN_TEST;  // 清除标志位
+ 0048 80911100          lds R24,_Key_Flags
+ 004C 8E7F              andi R24,254
+ 004E 80931100          sts _Key_Flags,R24
+ 0052                   .dbline 59
+ 0052           ;                       Send_Data_Packet();
+ 0052 6DD3              xcall _Send_Data_Packet
+ 0054                   .dbline 60
+ 0054           ;         }
+ 0054           L16:
+ 0054                   .dbline 62
+ 0054           ;         
+ 0054           ;         if(Key_Flags & FLAG_SHORT_TEST) {
+ 0054 20901100          lds R2,_Key_Flags
+ 0058 21FE              sbrs R2,1
+ 005A 07C0              rjmp L18
+ 005C           X3:
+ 005C                   .dbline 62
+ 005C                   .dbline 65
+ 005C           ;             // 短路检测完成，可以发送数据等操作
+ 005C           ;             // 发送数据包
+ 005C           ;                       Process_ADC_Data();
+ 005C 1ED0              xcall _Process_ADC_Data
+ 005E                   .dbline 66
+ 005E           ;             Key_Flags &= ~FLAG_SHORT_TEST;  // 清除标志位
+ 005E 80911100          lds R24,_Key_Flags
+ 0062 8D7F              andi R24,253
+ 0064 80931100          sts _Key_Flags,R24
+ 0068                   .dbline 67
+ 0068           ;                       Send_Data_Packet();
+ 0068 62D3              xcall _Send_Data_Packet
+ 006A                   .dbline 68
+ 006A           ;         }
+ 006A           L18:
+ 006A                   .dbline 70
+ 006A           ;               
+ 006A           ;               if(Key_Flags & FLAG_START) {
+ 006A 20901100          lds R2,_Key_Flags
+ 006E 22FE              sbrs R2,2
+ 0070 07C0              rjmp L20
+ 0072           X4:
+ 0072                   .dbline 70
+ 0072                   .dbline 72
+ 0072           ;             
+ 0072           ;                       Process_ADC_Data();
+ 0072 13D0              xcall _Process_ADC_Data
+ 0074                   .dbline 73
+ 0074           ;             Key_Flags &= ~FLAG_START;  // 清除标志位
+ 0074 80911100          lds R24,_Key_Flags
+ 0078 8B7F              andi R24,251
+ 007A 80931100          sts _Key_Flags,R24
+ 007E                   .dbline 74
+ 007E           ;                       Send_Data_Packet();
+ 007E 57D3              xcall _Send_Data_Packet
+ 0080                   .dbline 75
+ 0080           ;         }
+ 0080           L20:
+ 0080                   .dbline 78
+ 0080           ;               //Send_Data_Packet();
+ 0080           ;         // 延时，控制发送速率（约10Hz）
+ 0080           ;         Delay_ms(100);
+ 0080 04E6              ldi R16,100
+ 0082 10E0              ldi R17,0
+ 0084 BDDF              xcall _Delay_ms
+ 0086                   .dbline 79
+ 0086           ;     }
+ 0086           L14:
+ 0086                   .dbline 45
+ 0086 D9CF              xjmp L13
+ 0088           X5:
+ 0088                   .dbline -2
+ 0088           L12:
+ 0088                   .dbline 0 ; func end
+ 0088 0895              ret
+ 008A                   .dbend
+ 008A                   .dbfunc e System_Init _System_Init fV
+                        .even
+ 008A           _System_Init::
+ 008A                   .dbline -1
+ 008A                   .dbline 83
+ 008A           ;       return 0;
+ 008A           ; }
+ 008A           ; 
+ 008A           ; void System_Init(void) {
+ 008A                   .dbline 85
+ 008A           ;     // 初始化串口
+ 008A           ;       Keys_Init();
+ 008A 0E940000          xcall _Keys_Init
+ 008E                   .dbline 86
+ 008E           ;     UART_Init();
+ 008E 0E940000          xcall _UART_Init
+ 0092                   .dbline 89
+ 0092           ;     //GPIO_Init();
+ 0092           ;     // 初始化ADC
+ 0092           ;     ADC_Init();
+ 0092 0E940000          xcall _ADC_Init
+ 0096                   .dbline 92
+ 0096           ;     
+ 0096           ;     // 全局中断使能
+ 0096           ;     asm("sei");
+ 0096 7894              sei
+ 0098                   .dbline -2
+ 0098           L22:
+ 0098                   .dbline 0 ; func end
+ 0098 0895              ret
+ 009A                   .dbend
+ 009A                   .dbfunc e Process_ADC_Data _Process_ADC_Data fV
+                        .even
+ 009A           _Process_ADC_Data::
+ 009A AA92              st -y,R10
+ 009C BA92              st -y,R11
+ 009E                   .dbline -1
+ 009E                   .dbline 95
+ 009E           ; }
+ 009E           ; 
+ 009E           ; void Process_ADC_Data(void) {
+ 009E                   .dbline 98
+ 009E           ;     
+ 009E           ;         
+ 009E           ;         packet.adc0H = (unsigned int)ADC_Values[0]>>8;   //Iim
+ 009E 20900000          lds R2,_ADC_Values
+ 00A2 30900100          lds R3,_ADC_Values+1
+ 00A6 232C              mov R2,R3
+ 00A8 3324              clr R3
+ 00AA 20921300          sts _packet+1,R2
+ 00AE                   .dbline 99
+ 00AE           ;         packet.adc0L = (unsigned char)ADC_Values[0];
+ 00AE 20900000          lds R2,_ADC_Values
+ 00B2 30900100          lds R3,_ADC_Values+1
+ 00B6 20921400          sts _packet+2,R2
+ 00BA                   .dbline 100
+ 00BA           ;         packet.adc1H = (unsigned int)ADC_Values[1]>>8;          //Ire
+ 00BA 20900200          lds R2,_ADC_Values+2
+ 00BE 30900300          lds R3,_ADC_Values+2+1
+ 00C2 232C              mov R2,R3
+ 00C4 3324              clr R3
+ 00C6 20921500          sts _packet+3,R2
+ 00CA                   .dbline 101
+ 00CA           ;         packet.adc1L = (unsigned char)ADC_Values[1];
+ 00CA 20900200          lds R2,_ADC_Values+2
+ 00CE 30900300          lds R3,_ADC_Values+2+1
+ 00D2 20921600          sts _packet+4,R2
+ 00D6                   .dbline 102
+ 00D6           ;               packet.adc2H = (unsigned int)ADC_Values[2]>>8;    //Uim
+ 00D6 20900400          lds R2,_ADC_Values+4
+ 00DA 30900500          lds R3,_ADC_Values+4+1
+ 00DE 232C              mov R2,R3
+ 00E0 3324              clr R3
+ 00E2 20921700          sts _packet+5,R2
+ 00E6                   .dbline 103
+ 00E6           ;         packet.adc2L = (unsigned char)ADC_Values[2];
+ 00E6 20900400          lds R2,_ADC_Values+4
+ 00EA 30900500          lds R3,_ADC_Values+4+1
+ 00EE 20921800          sts _packet+6,R2
+ 00F2                   .dbline 104
+ 00F2           ;         packet.adc3H = (unsigned int)ADC_Values[3]>>8;          //Ure
+ 00F2 20900600          lds R2,_ADC_Values+6
+ 00F6 30900700          lds R3,_ADC_Values+6+1
+ 00FA 232C              mov R2,R3
+ 00FC 3324              clr R3
+ 00FE 20921900          sts _packet+7,R2
+ 0102                   .dbline 105
+ 0102           ;         packet.adc3L = (unsigned char)ADC_Values[3];
+ 0102 20900600          lds R2,_ADC_Values+6
+ 0106 30900700          lds R3,_ADC_Values+6+1
+ 010A 20921A00          sts _packet+8,R2
+ 010E                   .dbline 107
+ 010E           ;               
+ 010E           ;               packet.adc00H = (unsigned int)(ADC_Values_0[0])>>8;   //Iim
+ 010E 20900800          lds R2,_ADC_Values_0
+ 0112 30900900          lds R3,_ADC_Values_0+1
+ 0116 232C              mov R2,R3
+ 0118 3324              clr R3
+ 011A 20921B00          sts _packet+9,R2
+ 011E                   .dbline 108
+ 011E           ;         packet.adc00L = (unsigned char)(ADC_Values_0[0]);
+ 011E 20900800          lds R2,_ADC_Values_0
+ 0122 30900900          lds R3,_ADC_Values_0+1
+ 0126 20921C00          sts _packet+10,R2
+ 012A                   .dbline 109
+ 012A           ;         packet.adc10H = (unsigned int)(ADC_Values_0[1])>>8;     //Ire
+ 012A 20900A00          lds R2,_ADC_Values_0+2
+ 012E 30900B00          lds R3,_ADC_Values_0+2+1
+ 0132 232C              mov R2,R3
+ 0134 3324              clr R3
+ 0136 20921D00          sts _packet+11,R2
+ 013A                   .dbline 110
+ 013A           ;         packet.adc10L = (unsigned char)(ADC_Values_0[1]);
+ 013A 20900A00          lds R2,_ADC_Values_0+2
+ 013E 30900B00          lds R3,_ADC_Values_0+2+1
+ 0142 20921E00          sts _packet+12,R2
+ 0146                   .dbline 111
+ 0146           ;               packet.adc20H = (unsigned int)(ADC_Values_0[2])>>8;       //Uim
+ 0146 20900C00          lds R2,_ADC_Values_0+4
+ 014A 30900D00          lds R3,_ADC_Values_0+4+1
+ 014E 232C              mov R2,R3
+ 0150 3324              clr R3
+ 0152 20921F00          sts _packet+13,R2
+ 0156                   .dbline 112
+ 0156           ;         packet.adc20L = (unsigned char)(ADC_Values_0[2]);
+ 0156 20900C00          lds R2,_ADC_Values_0+4
+ 015A 30900D00          lds R3,_ADC_Values_0+4+1
+ 015E 20922000          sts _packet+14,R2
+ 0162                   .dbline 113
+ 0162           ;         packet.adc30H = (unsigned int)(ADC_Values_0[3])>>8;     //Ure
+ 0162 20900E00          lds R2,_ADC_Values_0+6
+ 0166 30900F00          lds R3,_ADC_Values_0+6+1
+ 016A 232C              mov R2,R3
+ 016C 3324              clr R3
+ 016E 20922100          sts _packet+15,R2
+ 0172                   .dbline 114
+ 0172           ;         packet.adc30L = (unsigned char)(ADC_Values_0[3]);
+ 0172 20900E00          lds R2,_ADC_Values_0+6
+ 0176 30900F00          lds R3,_ADC_Values_0+6+1
+ 017A 20922200          sts _packet+16,R2
+ 017E                   .dbline 116
+ 017E           ;         
+ 017E           ;               packet.LH = (unsigned int)get_L_val()>>8;   //Iim
+ 017E 6DD2              xcall _get_L_val
+ 0180 1801              movw R2,R16
+ 0182 232C              mov R2,R3
+ 0184 3324              clr R3
+ 0186 20922300          sts _packet+17,R2
+ 018A                   .dbline 117
+ 018A           ;         packet.LL = (unsigned char)get_L_val();
+ 018A 67D2              xcall _get_L_val
+ 018C 00932400          sts _packet+18,R16
+ 0190                   .dbline 118
+ 0190           ;         packet.QH = (unsigned int)get_Q_val()>>8;       //Ire
+ 0190 99D2              xcall _get_Q_val
+ 0192 5801              movw R10,R16
+ 0194 1501              movw R2,R10
+ 0196 232C              mov R2,R3
+ 0198 3324              clr R3
+ 019A 20922500          sts _packet+19,R2
+ 019E                   .dbline 119
+ 019E           ;         packet.QL = (unsigned char)get_Q_val();
+ 019E 92D2              xcall _get_Q_val
+ 01A0 5801              movw R10,R16
+ 01A2 A0922600          sts _packet+20,R10
+ 01A6                   .dbline -2
+ 01A6           L23:
+ 01A6                   .dbline 0 ; func end
+ 01A6 B990              ld R11,y+
+ 01A8 A990              ld R10,y+
+ 01AA 0895              ret
+ 01AC                   .dbend
+ 01AC                   .dbfunc e L_Val_Calculation _L_Val_Calculation fi
+ 01AC           ;              Q -> y+24
+ 01AC           ;              k -> y+20
+ 01AC           ;              b -> y+16
+ 01AC           ;              a -> y+12
+ 01AC           ;              d -> y+8
+ 01AC           ;              c -> y+4
+ 01AC           ;              L -> y+0
+ 01AC           ;           Iim0 -> R10,R11
+ 01AC           ;           Ire0 -> R14,R15
+ 01AC           ;           Uim0 -> y+46
+ 01AC           ;           Ure0 -> y+44
+ 01AC           ;            Iim -> y+42
+ 01AC           ;            Ire -> y+40
+ 01AC           ;            Uim -> y+38
+ 01AC           ;            Ure -> R12,R13
+                        .even
+ 01AC           _L_Val_Calculation::
+ 01AC 3A93              st -y,r19
+ 01AE 2A93              st -y,r18
+ 01B0 0E940000          xcall push_xgsetF0FC
+ 01B4 6801              movw R12,R16
+ 01B6 6C97              sbiw R28,28
+ 01B8 E8A8              ldd R14,y+48
+ 01BA F9A8              ldd R15,y+49
+ 01BC AAA8              ldd R10,y+50
+ 01BE BBA8              ldd R11,y+51
+ 01C0                   .dbline -1
+ 01C0                   .dbline 125
+ 01C0           ;               
+ 01C0           ;               
+ 01C0           ; }
+ 01C0           ; //计算电感值
+ 01C0           ; unsigned int L_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ire,unsigned int Iim,unsigned int Ure0,unsigned int Uim0,unsigned int Ire0,unsigned int Iim0)
+ 01C0           ; {
+ 01C0                   .dbline 126
+ 01C0           ;         float a=1.f*Ure-Ure0;
+ 01C0 00E0              ldi R16,<L57
+ 01C2 10E0              ldi R17,>L57
+ 01C4 0E940000          xcall lpm32
+ 01C8 1801              movw R2,R16
+ 01CA 2901              movw R4,R18
+ 01CC 8601              movw R16,R12
+ 01CE 0E940000          xcall uint2fp
+ 01D2 3A93              st -y,R19
+ 01D4 2A93              st -y,R18
+ 01D6 1A93              st -y,R17
+ 01D8 0A93              st -y,R16
+ 01DA 8101              movw R16,R2
+ 01DC 9201              movw R18,R4
+ 01DE 0E940000          xcall fpmule2
+ 01E2 1801              movw R2,R16
+ 01E4 2901              movw R4,R18
+ 01E6 0CA5              ldd R16,y+44
+ 01E8 1DA5              ldd R17,y+45
+ 01EA 0E940000          xcall uint2fp
+ 01EE 3A93              st -y,R19
+ 01F0 2A93              st -y,R18
+ 01F2 1A93              st -y,R17
+ 01F4 0A93              st -y,R16
+ 01F6 8101              movw R16,R2
+ 01F8 9201              movw R18,R4
+ 01FA 0E940000          xcall fpsub2
+ 01FE 0C87              std y+12,R16
+ 0200 1D87              std y+13,R17
+ 0202 2E87              std y+14,R18
+ 0204 3F87              std y+15,R19
+ 0206                   .dbline 127
+ 0206           ;         float b=1.f*Uim-Uim0;
+ 0206 00E0              ldi R16,<L57
+ 0208 10E0              ldi R17,>L57
+ 020A 0E940000          xcall lpm32
+ 020E 1801              movw R2,R16
+ 0210 2901              movw R4,R18
+ 0212 0EA1              ldd R16,y+38
+ 0214 1FA1              ldd R17,y+39
+ 0216 0E940000          xcall uint2fp
+ 021A 3A93              st -y,R19
+ 021C 2A93              st -y,R18
+ 021E 1A93              st -y,R17
+ 0220 0A93              st -y,R16
+ 0222 8101              movw R16,R2
+ 0224 9201              movw R18,R4
+ 0226 0E940000          xcall fpmule2
+ 022A 1801              movw R2,R16
+ 022C 2901              movw R4,R18
+ 022E 0EA5              ldd R16,y+46
+ 0230 1FA5              ldd R17,y+47
+ 0232 0E940000          xcall uint2fp
+ 0236 3A93              st -y,R19
+ 0238 2A93              st -y,R18
+ 023A 1A93              st -y,R17
+ 023C 0A93              st -y,R16
+ 023E 8101              movw R16,R2
+ 0240 9201              movw R18,R4
+ 0242 0E940000          xcall fpsub2
+ 0246 088B              std y+16,R16
+ 0248 198B              std y+17,R17
+ 024A 2A8B              std y+18,R18
+ 024C 3B8B              std y+19,R19
+ 024E                   .dbline 128
+ 024E           ;         float c=1.f*Ire-Ire0;
+ 024E 00E0              ldi R16,<L57
+ 0250 10E0              ldi R17,>L57
+ 0252 0E940000          xcall lpm32
+ 0256 1801              movw R2,R16
+ 0258 2901              movw R4,R18
+ 025A 08A5              ldd R16,y+40
+ 025C 19A5              ldd R17,y+41
+ 025E 0E940000          xcall uint2fp
+ 0262 3A93              st -y,R19
+ 0264 2A93              st -y,R18
+ 0266 1A93              st -y,R17
+ 0268 0A93              st -y,R16
+ 026A 8101              movw R16,R2
+ 026C 9201              movw R18,R4
+ 026E 0E940000          xcall fpmule2
+ 0272 1801              movw R2,R16
+ 0274 2901              movw R4,R18
+ 0276 8701              movw R16,R14
+ 0278 0E940000          xcall uint2fp
+ 027C 3A93              st -y,R19
+ 027E 2A93              st -y,R18
+ 0280 1A93              st -y,R17
+ 0282 0A93              st -y,R16
+ 0284 8101              movw R16,R2
+ 0286 9201              movw R18,R4
+ 0288 0E940000          xcall fpsub2
+ 028C 0C83              std y+4,R16
+ 028E 1D83              std y+5,R17
+ 0290 2E83              std y+6,R18
+ 0292 3F83              std y+7,R19
+ 0294                   .dbline 129
+ 0294           ;         float d=1.f*Iim-Iim0;
+ 0294 00E0              ldi R16,<L57
+ 0296 10E0              ldi R17,>L57
+ 0298 0E940000          xcall lpm32
+ 029C 1801              movw R2,R16
+ 029E 2901              movw R4,R18
+ 02A0 0AA5              ldd R16,y+42
+ 02A2 1BA5              ldd R17,y+43
+ 02A4 0E940000          xcall uint2fp
+ 02A8 3A93              st -y,R19
+ 02AA 2A93              st -y,R18
+ 02AC 1A93              st -y,R17
+ 02AE 0A93              st -y,R16
+ 02B0 8101              movw R16,R2
+ 02B2 9201              movw R18,R4
+ 02B4 0E940000          xcall fpmule2
+ 02B8 1801              movw R2,R16
+ 02BA 2901              movw R4,R18
+ 02BC 8501              movw R16,R10
+ 02BE 0E940000          xcall uint2fp
+ 02C2 3A93              st -y,R19
+ 02C4 2A93              st -y,R18
+ 02C6 1A93              st -y,R17
+ 02C8 0A93              st -y,R16
+ 02CA 8101              movw R16,R2
+ 02CC 9201              movw R18,R4
+ 02CE 0E940000          xcall fpsub2
+ 02D2 0887              std y+8,R16
+ 02D4 1987              std y+9,R17
+ 02D6 2A87              std y+10,R18
+ 02D8 3B87              std y+11,R19
+ 02DA                   .dbline 130
+ 02DA           ;         float k=300.0f/503;
+ 02DA 00E0              ldi R16,<L58
+ 02DC 10E0              ldi R17,>L58
+ 02DE 0E940000          xcall lpm32
+ 02E2 0C8B              std y+20,R16
+ 02E4 1D8B              std y+21,R17
+ 02E6 2E8B              std y+22,R18
+ 02E8 3F8B              std y+23,R19
+ 02EA                   .dbline 131
+ 02EA           ;         float Q=0;
+ 02EA 00E0              ldi R16,<L59
+ 02EC 10E0              ldi R17,>L59
+ 02EE 0E940000          xcall lpm32
+ 02F2 088F              std y+24,R16
+ 02F4 198F              std y+25,R17
+ 02F6 2A8F              std y+26,R18
+ 02F8 3B8F              std y+27,R19
+ 02FA                   .dbline 132
+ 02FA           ;         float L=0;
+ 02FA 00E0              ldi R16,<L59
+ 02FC 10E0              ldi R17,>L59
+ 02FE 0E940000          xcall lpm32
+ 0302 0883              std y+0,R16
+ 0304 1983              std y+1,R17
+ 0306 2A83              std y+2,R18
+ 0308 3B83              std y+3,R19
+ 030A                   .dbline 134
+ 030A           ;         //Q=(b*c-a*d)/(a*c+b*d);
+ 030A           ;         L=(b*c-a*d)*1000.f/(c*c+d*d)*k*1000.f/(2*3.14*1010.f);
+ 030A 00E0              ldi R16,<L60
+ 030C 10E0              ldi R17,>L60
+ 030E 0E940000          xcall lpm32
+ 0312 1801              movw R2,R16
+ 0314 2901              movw R4,R18
+ 0316 00E0              ldi R16,<L60
+ 0318 10E0              ldi R17,>L60
+ 031A 0E940000          xcall lpm32
+ 031E 3801              movw R6,R16
+ 0320 4901              movw R8,R18
+ 0322 0889              ldd R16,y+16
+ 0324 1989              ldd R17,y+17
+ 0326 2A89              ldd R18,y+18
+ 0328 3B89              ldd R19,y+19
+ 032A CE01              movw R24,R28
+ 032C 0496              adiw R24,4
+ 032E 9A93              st -y,R25
+ 0330 8A93              st -y,R24
+ 0332 0E940000          xcall fpmule1
+ 0336 A801              movw R20,R16
+ 0338 B901              movw R22,R18
+ 033A 0C85              ldd R16,y+12
+ 033C 1D85              ldd R17,y+13
+ 033E 2E85              ldd R18,y+14
+ 0340 3F85              ldd R19,y+15
+ 0342 CE01              movw R24,R28
+ 0344 0896              adiw R24,8
+ 0346 9A93              st -y,R25
+ 0348 8A93              st -y,R24
+ 034A 0E940000          xcall fpmule1x
+ 034E 8A01              movw R16,R20
+ 0350 9B01              movw R18,R22
+ 0352 0E940000          xcall fpsub2x
+ 0356 8301              movw R16,R6
+ 0358 9401              movw R18,R8
+ 035A 0E940000          xcall fpmule2
+ 035E 3801              movw R6,R16
+ 0360 4901              movw R8,R18
+ 0362 0C81              ldd R16,y+4
+ 0364 1D81              ldd R17,y+5
+ 0366 2E81              ldd R18,y+6
+ 0368 3F81              ldd R19,y+7
+ 036A CE01              movw R24,R28
+ 036C 0496              adiw R24,4
+ 036E 9A93              st -y,R25
+ 0370 8A93              st -y,R24
+ 0372 0E940000          xcall fpmule1
+ 0376 A801              movw R20,R16
+ 0378 B901              movw R22,R18
+ 037A 0885              ldd R16,y+8
+ 037C 1985              ldd R17,y+9
+ 037E 2A85              ldd R18,y+10
+ 0380 3B85              ldd R19,y+11
+ 0382 CE01              movw R24,R28
+ 0384 0896              adiw R24,8
+ 0386 9A93              st -y,R25
+ 0388 8A93              st -y,R24
+ 038A 0E940000          xcall fpmule1x
+ 038E 8A01              movw R16,R20
+ 0390 9B01              movw R18,R22
+ 0392 0E940000          xcall fpadd2x
+ 0396 8301              movw R16,R6
+ 0398 9401              movw R18,R8
+ 039A 0E940000          xcall fpdiv2
+ 039E CE01              movw R24,R28
+ 03A0 4496              adiw R24,20
+ 03A2 9A93              st -y,R25
+ 03A4 8A93              st -y,R24
+ 03A6 0E940000          xcall fpmule1x
+ 03AA 8101              movw R16,R2
+ 03AC 9201              movw R18,R4
+ 03AE 0E940000          xcall fpmule2
+ 03B2 1801              movw R2,R16
+ 03B4 2901              movw R4,R18
+ 03B6 00E0              ldi R16,<L61
+ 03B8 10E0              ldi R17,>L61
+ 03BA 0E940000          xcall lpm32
+ 03BE 3A93              st -y,R19
+ 03C0 2A93              st -y,R18
+ 03C2 1A93              st -y,R17
+ 03C4 0A93              st -y,R16
+ 03C6 8101              movw R16,R2
+ 03C8 9201              movw R18,R4
+ 03CA 0E940000          xcall fpdiv2
+ 03CE 0883              std y+0,R16
+ 03D0 1983              std y+1,R17
+ 03D2 2A83              std y+2,R18
+ 03D4 3B83              std y+3,R19
+ 03D6                   .dbline 135
+ 03D6           ;         L=-0.000001*L*L*L+0.000031*L*L+0.945883*L;
+ 03D6 00E0              ldi R16,<L62
+ 03D8 10E0              ldi R17,>L62
+ 03DA 0E940000          xcall lpm32
+ 03DE CE01              movw R24,R28
+ 03E0 9A93              st -y,R25
+ 03E2 8A93              st -y,R24
+ 03E4 0E940000          xcall fpmule1
+ 03E8 CE01              movw R24,R28
+ 03EA 9A93              st -y,R25
+ 03EC 8A93              st -y,R24
+ 03EE 0E940000          xcall fpmule1
+ 03F2 CE01              movw R24,R28
+ 03F4 9A93              st -y,R25
+ 03F6 8A93              st -y,R24
+ 03F8 0E940000          xcall fpmule1
+ 03FC 1801              movw R2,R16
+ 03FE 2901              movw R4,R18
+ 0400 00E0              ldi R16,<L63
+ 0402 10E0              ldi R17,>L63
+ 0404 0E940000          xcall lpm32
+ 0408 CE01              movw R24,R28
+ 040A 9A93              st -y,R25
+ 040C 8A93              st -y,R24
+ 040E 0E940000          xcall fpmule1
+ 0412 CE01              movw R24,R28
+ 0414 9A93              st -y,R25
+ 0416 8A93              st -y,R24
+ 0418 0E940000          xcall fpmule1x
+ 041C 8101              movw R16,R2
+ 041E 9201              movw R18,R4
+ 0420 0E940000          xcall fpadd2
+ 0424 1801              movw R2,R16
+ 0426 2901              movw R4,R18
+ 0428 00E0              ldi R16,<L64
+ 042A 10E0              ldi R17,>L64
+ 042C 0E940000          xcall lpm32
+ 0430 CE01              movw R24,R28
+ 0432 9A93              st -y,R25
+ 0434 8A93              st -y,R24
+ 0436 0E940000          xcall fpmule1x
+ 043A 8101              movw R16,R2
+ 043C 9201              movw R18,R4
+ 043E 0E940000          xcall fpadd2
+ 0442 0883              std y+0,R16
+ 0444 1983              std y+1,R17
+ 0446 2A83              std y+2,R18
+ 0448 3B83              std y+3,R19
+ 044A                   .dbline 136
+ 044A           ;         return L*100;
+ 044A 00E0              ldi R16,<L65
+ 044C 10E0              ldi R17,>L65
+ 044E 0E940000          xcall lpm32
+ 0452 CE01              movw R24,R28
+ 0454 9A93              st -y,R25
+ 0456 8A93              st -y,R24
+ 0458 0E940000          xcall fpmule1
+ 045C 0E940000          xcall fpint
+ 0460                   .dbline -2
+ 0460           L56:
+ 0460                   .dbline 0 ; func end
+ 0460 6C96              adiw R28,28
+ 0462 0E940000          xcall pop_xgsetF0FC
+ 0466 2296              adiw R28,2
+ 0468 0895              ret
+ 046A                   .dbsym l Q 24 D
+ 046A                   .dbsym l k 20 D
+ 046A                   .dbsym l b 16 D
+ 046A                   .dbsym l a 12 D
+ 046A                   .dbsym l d 8 D
+ 046A                   .dbsym l c 4 D
+ 046A                   .dbsym l L 0 D
+ 046A                   .dbsym r Iim0 10 i
+ 046A                   .dbsym r Ire0 14 i
+ 046A                   .dbsym l Uim0 46 i
+ 046A                   .dbsym l Ure0 44 i
+ 046A                   .dbsym l Iim 42 i
+ 046A                   .dbsym l Ire 40 i
+ 046A                   .dbsym l Uim 38 i
+ 046A                   .dbsym r Ure 12 i
+ 046A                   .dbend
+ 046A                   .dbfunc e Q_Val_Calculation _Q_Val_Calculation fi
+ 046A           ;              Q -> y+16
+ 046A           ;              d -> y+12
+ 046A           ;              c -> y+8
+ 046A           ;              b -> y+4
+ 046A           ;              a -> y+0
+ 046A           ;           Iim0 -> R10,R11
+ 046A           ;           Ire0 -> R14,R15
+ 046A           ;           Uim0 -> y+34
+ 046A           ;           Ure0 -> y+32
+ 046A           ;            Iim -> y+30
+ 046A           ;            Ire -> y+28
+ 046A           ;            Uim -> y+26
+ 046A           ;            Ure -> R12,R13
+                        .even
+ 046A           _Q_Val_Calculation::
+ 046A 3A93              st -y,r19
+ 046C 2A93              st -y,r18
+ 046E 0E940000          xcall push_xgset00FC
+ 0472 6801              movw R12,R16
+ 0474 6497              sbiw R28,20
+ 0476 ECA0              ldd R14,y+36
+ 0478 FDA0              ldd R15,y+37
+ 047A AEA0              ldd R10,y+38
+ 047C BFA0              ldd R11,y+39
+ 047E                   .dbline -1
+ 047E                   .dbline 142
+ 047E           ; }
+ 047E           ; 
+ 047E           ; 
+ 047E           ; //计算Q值
+ 047E           ; unsigned int Q_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ire,unsigned int Iim,unsigned int Ure0,unsigned int Uim0,unsigned int Ire0,unsigned int Iim0)
+ 047E           ; {
+ 047E                   .dbline 143
+ 047E           ;         float a=1.f*Ure-Ure0;
+ 047E 00E0              ldi R16,<L57
+ 0480 10E0              ldi R17,>L57
+ 0482 0E940000          xcall lpm32
+ 0486 1801              movw R2,R16
+ 0488 2901              movw R4,R18
+ 048A 8601              movw R16,R12
+ 048C 0E940000          xcall uint2fp
+ 0490 3A93              st -y,R19
+ 0492 2A93              st -y,R18
+ 0494 1A93              st -y,R17
+ 0496 0A93              st -y,R16
+ 0498 8101              movw R16,R2
+ 049A 9201              movw R18,R4
+ 049C 0E940000          xcall fpmule2
+ 04A0 1801              movw R2,R16
+ 04A2 2901              movw R4,R18
+ 04A4 08A1              ldd R16,y+32
+ 04A6 19A1              ldd R17,y+33
+ 04A8 0E940000          xcall uint2fp
+ 04AC 3A93              st -y,R19
+ 04AE 2A93              st -y,R18
+ 04B0 1A93              st -y,R17
+ 04B2 0A93              st -y,R16
+ 04B4 8101              movw R16,R2
+ 04B6 9201              movw R18,R4
+ 04B8 0E940000          xcall fpsub2
+ 04BC 0883              std y+0,R16
+ 04BE 1983              std y+1,R17
+ 04C0 2A83              std y+2,R18
+ 04C2 3B83              std y+3,R19
+ 04C4                   .dbline 144
+ 04C4           ;         float b=1.f*Uim-Uim0;
+ 04C4 00E0              ldi R16,<L57
+ 04C6 10E0              ldi R17,>L57
+ 04C8 0E940000          xcall lpm32
+ 04CC 1801              movw R2,R16
+ 04CE 2901              movw R4,R18
+ 04D0 0A8D              ldd R16,y+26
+ 04D2 1B8D              ldd R17,y+27
+ 04D4 0E940000          xcall uint2fp
+ 04D8 3A93              st -y,R19
+ 04DA 2A93              st -y,R18
+ 04DC 1A93              st -y,R17
+ 04DE 0A93              st -y,R16
+ 04E0 8101              movw R16,R2
+ 04E2 9201              movw R18,R4
+ 04E4 0E940000          xcall fpmule2
+ 04E8 1801              movw R2,R16
+ 04EA 2901              movw R4,R18
+ 04EC 0AA1              ldd R16,y+34
+ 04EE 1BA1              ldd R17,y+35
+ 04F0 0E940000          xcall uint2fp
+ 04F4 3A93              st -y,R19
+ 04F6 2A93              st -y,R18
+ 04F8 1A93              st -y,R17
+ 04FA 0A93              st -y,R16
+ 04FC 8101              movw R16,R2
+ 04FE 9201              movw R18,R4
+ 0500 0E940000          xcall fpsub2
+ 0504 0C83              std y+4,R16
+ 0506 1D83              std y+5,R17
+ 0508 2E83              std y+6,R18
+ 050A 3F83              std y+7,R19
+ 050C                   .dbline 145
+ 050C           ;         float c=1.f*Ire-Ire0;
+ 050C 00E0              ldi R16,<L57
+ 050E 10E0              ldi R17,>L57
+ 0510 0E940000          xcall lpm32
+ 0514 1801              movw R2,R16
+ 0516 2901              movw R4,R18
+ 0518 0C8D              ldd R16,y+28
+ 051A 1D8D              ldd R17,y+29
+ 051C 0E940000          xcall uint2fp
+ 0520 3A93              st -y,R19
+ 0522 2A93              st -y,R18
+ 0524 1A93              st -y,R17
+ 0526 0A93              st -y,R16
+ 0528 8101              movw R16,R2
+ 052A 9201              movw R18,R4
+ 052C 0E940000          xcall fpmule2
+ 0530 1801              movw R2,R16
+ 0532 2901              movw R4,R18
+ 0534 8701              movw R16,R14
+ 0536 0E940000          xcall uint2fp
+ 053A 3A93              st -y,R19
+ 053C 2A93              st -y,R18
+ 053E 1A93              st -y,R17
+ 0540 0A93              st -y,R16
+ 0542 8101              movw R16,R2
+ 0544 9201              movw R18,R4
+ 0546 0E940000          xcall fpsub2
+ 054A 0887              std y+8,R16
+ 054C 1987              std y+9,R17
+ 054E 2A87              std y+10,R18
+ 0550 3B87              std y+11,R19
+ 0552                   .dbline 146
+ 0552           ;         float d=1.f*Iim-Iim0;
+ 0552 00E0              ldi R16,<L57
+ 0554 10E0              ldi R17,>L57
+ 0556 0E940000          xcall lpm32
+ 055A 1801              movw R2,R16
+ 055C 2901              movw R4,R18
+ 055E 0E8D              ldd R16,y+30
+ 0560 1F8D              ldd R17,y+31
+ 0562 0E940000          xcall uint2fp
+ 0566 3A93              st -y,R19
+ 0568 2A93              st -y,R18
+ 056A 1A93              st -y,R17
+ 056C 0A93              st -y,R16
+ 056E 8101              movw R16,R2
+ 0570 9201              movw R18,R4
+ 0572 0E940000          xcall fpmule2
+ 0576 1801              movw R2,R16
+ 0578 2901              movw R4,R18
+ 057A 8501              movw R16,R10
+ 057C 0E940000          xcall uint2fp
+ 0580 3A93              st -y,R19
+ 0582 2A93              st -y,R18
+ 0584 1A93              st -y,R17
+ 0586 0A93              st -y,R16
+ 0588 8101              movw R16,R2
+ 058A 9201              movw R18,R4
+ 058C 0E940000          xcall fpsub2
+ 0590 0C87              std y+12,R16
+ 0592 1D87              std y+13,R17
+ 0594 2E87              std y+14,R18
+ 0596 3F87              std y+15,R19
+ 0598                   .dbline 148
+ 0598           ;         // float k=1.f*300/503;
+ 0598           ;         float Q=0;
+ 0598 00E0              ldi R16,<L59
+ 059A 10E0              ldi R17,>L59
+ 059C 0E940000          xcall lpm32
+ 05A0 088B              std y+16,R16
+ 05A2 198B              std y+17,R17
+ 05A4 2A8B              std y+18,R18
+ 05A6 3B8B              std y+19,R19
+ 05A8                   .dbline 149
+ 05A8           ;         Q=1.f*(b*c-a*d)/(a*c+b*d);
+ 05A8 00E0              ldi R16,<L57
+ 05AA 10E0              ldi R17,>L57
+ 05AC 0E940000          xcall lpm32
+ 05B0 1801              movw R2,R16
+ 05B2 2901              movw R4,R18
+ 05B4 0C81              ldd R16,y+4
+ 05B6 1D81              ldd R17,y+5
+ 05B8 2E81              ldd R18,y+6
+ 05BA 3F81              ldd R19,y+7
+ 05BC CE01              movw R24,R28
+ 05BE 0896              adiw R24,8
+ 05C0 9A93              st -y,R25
+ 05C2 8A93              st -y,R24
+ 05C4 0E940000          xcall fpmule1
+ 05C8 3801              movw R6,R16
+ 05CA 4901              movw R8,R18
+ 05CC 0881              ldd R16,y+0
+ 05CE 1981              ldd R17,y+1
+ 05D0 2A81              ldd R18,y+2
+ 05D2 3B81              ldd R19,y+3
+ 05D4 CE01              movw R24,R28
+ 05D6 0C96              adiw R24,12
+ 05D8 9A93              st -y,R25
+ 05DA 8A93              st -y,R24
+ 05DC 0E940000          xcall fpmule1x
+ 05E0 8301              movw R16,R6
+ 05E2 9401              movw R18,R8
+ 05E4 0E940000          xcall fpsub2x
+ 05E8 8101              movw R16,R2
+ 05EA 9201              movw R18,R4
+ 05EC 0E940000          xcall fpmule2
+ 05F0 1801              movw R2,R16
+ 05F2 2901              movw R4,R18
+ 05F4 0881              ldd R16,y+0
+ 05F6 1981              ldd R17,y+1
+ 05F8 2A81              ldd R18,y+2
+ 05FA 3B81              ldd R19,y+3
+ 05FC CE01              movw R24,R28
+ 05FE 0896              adiw R24,8
+ 0600 9A93              st -y,R25
+ 0602 8A93              st -y,R24
+ 0604 0E940000          xcall fpmule1
+ 0608 3801              movw R6,R16
+ 060A 4901              movw R8,R18
+ 060C 0C81              ldd R16,y+4
+ 060E 1D81              ldd R17,y+5
+ 0610 2E81              ldd R18,y+6
+ 0612 3F81              ldd R19,y+7
+ 0614 CE01              movw R24,R28
+ 0616 0C96              adiw R24,12
+ 0618 9A93              st -y,R25
+ 061A 8A93              st -y,R24
+ 061C 0E940000          xcall fpmule1x
+ 0620 8301              movw R16,R6
+ 0622 9401              movw R18,R8
+ 0624 0E940000          xcall fpadd2x
+ 0628 8101              movw R16,R2
+ 062A 9201              movw R18,R4
+ 062C 0E940000          xcall fpdiv2
+ 0630 088B              std y+16,R16
+ 0632 198B              std y+17,R17
+ 0634 2A8B              std y+18,R18
+ 0636 3B8B              std y+19,R19
+ 0638                   .dbline 152
+ 0638           ;         //L=(b*c-a*d)/(c*c+d*d)*k/(2*3.14*1000);
+ 0638           ;         
+ 0638           ;         return Q*100;
+ 0638 00E0              ldi R16,<L65
+ 063A 10E0              ldi R17,>L65
+ 063C 0E940000          xcall lpm32
+ 0640 CE01              movw R24,R28
+ 0642 4096              adiw R24,16
+ 0644 9A93              st -y,R25
+ 0646 8A93              st -y,R24
+ 0648 0E940000          xcall fpmule1
+ 064C 0E940000          xcall fpint
+ 0650                   .dbline -2
+ 0650           L66:
+ 0650                   .dbline 0 ; func end
+ 0650 6496              adiw R28,20
+ 0652 0E940000          xcall pop_xgset00FC
+ 0656 2296              adiw R28,2
+ 0658 0895              ret
+ 065A                   .dbsym l Q 16 D
+ 065A                   .dbsym l d 12 D
+ 065A                   .dbsym l c 8 D
+ 065A                   .dbsym l b 4 D
+ 065A                   .dbsym l a 0 D
+ 065A                   .dbsym r Iim0 10 i
+ 065A                   .dbsym r Ire0 14 i
+ 065A                   .dbsym l Uim0 34 i
+ 065A                   .dbsym l Ure0 32 i
+ 065A                   .dbsym l Iim 30 i
+ 065A                   .dbsym l Ire 28 i
+ 065A                   .dbsym l Uim 26 i
+ 065A                   .dbsym r Ure 12 i
+ 065A                   .dbend
+ 065A                   .dbfunc e get_L_val _get_L_val fi
+ 065A           ;              L -> R10,R11
+                        .even
+ 065A           _get_L_val::
+ 065A AA92              st -y,R10
+ 065C BA92              st -y,R11
+ 065E 2C97              sbiw R28,12
+ 0660                   .dbline -1
+ 0660                   .dbline 156
+ 0660           ; }
+ 0660           ; 
+ 0660           ; unsigned int get_L_val(void)
+ 0660           ; {              
+ 0660                   .dbline 158
+ 0660           ;     unsigned int L;
+ 0660           ;     L=L_Val_Calculation(ADC_Values[3],ADC_Values[2],ADC_Values[1],ADC_Values[0],ADC_Values_0[3],ADC_Values_0[2],ADC_Values_0[1],ADC_Values_0[0]);
+ 0660 20900800          lds R2,_ADC_Values_0
+ 0664 30900900          lds R3,_ADC_Values_0+1
+ 0668 3B86              std y+11,R3
+ 066A 2A86              std y+10,R2
+ 066C 20900A00          lds R2,_ADC_Values_0+2
+ 0670 30900B00          lds R3,_ADC_Values_0+2+1
+ 0674 3986              std y+9,R3
+ 0676 2886              std y+8,R2
+ 0678 20900C00          lds R2,_ADC_Values_0+4
+ 067C 30900D00          lds R3,_ADC_Values_0+4+1
+ 0680 3F82              std y+7,R3
+ 0682 2E82              std y+6,R2
+ 0684 20900E00          lds R2,_ADC_Values_0+6
+ 0688 30900F00          lds R3,_ADC_Values_0+6+1
+ 068C 3D82              std y+5,R3
+ 068E 2C82              std y+4,R2
+ 0690 20900000          lds R2,_ADC_Values
+ 0694 30900100          lds R3,_ADC_Values+1
+ 0698 3B82              std y+3,R3
+ 069A 2A82              std y+2,R2
+ 069C 20900200          lds R2,_ADC_Values+2
+ 06A0 30900300          lds R3,_ADC_Values+2+1
+ 06A4 3982              std y+1,R3
+ 06A6 2882              std y+0,R2
+ 06A8 20910400          lds R18,_ADC_Values+4
+ 06AC 30910500          lds R19,_ADC_Values+4+1
+ 06B0 00910600          lds R16,_ADC_Values+6
+ 06B4 10910700          lds R17,_ADC_Values+6+1
+ 06B8 79DD              xcall _L_Val_Calculation
+ 06BA 5801              movw R10,R16
+ 06BC                   .dbline 159
+ 06BC           ;     return L;
+ 06BC                   .dbline -2
+ 06BC           L67:
+ 06BC                   .dbline 0 ; func end
+ 06BC 2C96              adiw R28,12
+ 06BE B990              ld R11,y+
+ 06C0 A990              ld R10,y+
+ 06C2 0895              ret
+ 06C4                   .dbsym r L 10 i
+ 06C4                   .dbend
+ 06C4                   .dbfunc e get_Q_val _get_Q_val fi
+ 06C4           ;              Q -> R10,R11
+                        .even
+ 06C4           _get_Q_val::
+ 06C4 AA92              st -y,R10
+ 06C6 BA92              st -y,R11
+ 06C8 2C97              sbiw R28,12
+ 06CA                   .dbline -1
+ 06CA                   .dbline 163
+ 06CA           ; }
+ 06CA           ; 
+ 06CA           ; unsigned int get_Q_val(void)
+ 06CA           ; {
+ 06CA                   .dbline 165
+ 06CA           ;     unsigned int Q;
+ 06CA           ;     Q=Q_Val_Calculation(ADC_Values[3],ADC_Values[2],ADC_Values[1],ADC_Values[0],ADC_Values_0[3],ADC_Values_0[2],ADC_Values_0[1],ADC_Values_0[0]);
+ 06CA 20900800          lds R2,_ADC_Values_0
+ 06CE 30900900          lds R3,_ADC_Values_0+1
+ 06D2 3B86              std y+11,R3
+ 06D4 2A86              std y+10,R2
+ 06D6 20900A00          lds R2,_ADC_Values_0+2
+ 06DA 30900B00          lds R3,_ADC_Values_0+2+1
+ 06DE 3986              std y+9,R3
+ 06E0 2886              std y+8,R2
+ 06E2 20900C00          lds R2,_ADC_Values_0+4
+ 06E6 30900D00          lds R3,_ADC_Values_0+4+1
+ 06EA 3F82              std y+7,R3
+ 06EC 2E82              std y+6,R2
+ 06EE 20900E00          lds R2,_ADC_Values_0+6
+ 06F2 30900F00          lds R3,_ADC_Values_0+6+1
+ 06F6 3D82              std y+5,R3
+ 06F8 2C82              std y+4,R2
+ 06FA 20900000          lds R2,_ADC_Values
+ 06FE 30900100          lds R3,_ADC_Values+1
+ 0702 3B82              std y+3,R3
+ 0704 2A82              std y+2,R2
+ 0706 20900200          lds R2,_ADC_Values+2
+ 070A 30900300          lds R3,_ADC_Values+2+1
+ 070E 3982              std y+1,R3
+ 0710 2882              std y+0,R2
+ 0712 20910400          lds R18,_ADC_Values+4
+ 0716 30910500          lds R19,_ADC_Values+4+1
+ 071A 00910600          lds R16,_ADC_Values+6
+ 071E 10910700          lds R17,_ADC_Values+6+1
+ 0722 A3DE              xcall _Q_Val_Calculation
+ 0724 5801              movw R10,R16
+ 0726                   .dbline 166
+ 0726           ;     return Q;
+ 0726                   .dbline -2
+ 0726           L74:
+ 0726                   .dbline 0 ; func end
+ 0726 2C96              adiw R28,12
+ 0728 B990              ld R11,y+
+ 072A A990              ld R10,y+
+ 072C 0895              ret
+ 072E                   .dbsym r Q 10 i
+ 072E                   .dbend
+ 072E                   .dbfunc e Send_Data_Packet _Send_Data_Packet fV
+                        .even
+ 072E           _Send_Data_Packet::
+ 072E                   .dbline -1
+ 072E                   .dbline 169
+ 072E           ; }
+ 072E           ; 
+ 072E           ; void Send_Data_Packet(void) {
+ 072E                   .dbline 171
+ 072E           ;     // 发送帧头
+ 072E           ;     UART_Transmit(packet.header);
+ 072E 00911200          lds R16,_packet
+ 0732 0E940000          xcall _UART_Transmit
+ 0736                   .dbline 174
+ 0736           ;     
+ 0736           ;     // 发送ADC数据
+ 0736           ;     UART_Transmit(packet.adc0H);
+ 0736 00911300          lds R16,_packet+1
+ 073A 0E940000          xcall _UART_Transmit
+ 073E                   .dbline 175
+ 073E           ;     UART_Transmit(packet.adc0L);
+ 073E 00911400          lds R16,_packet+2
+ 0742 0E940000          xcall _UART_Transmit
+ 0746                   .dbline 176
+ 0746           ;     UART_Transmit(packet.adc1H);
+ 0746 00911500          lds R16,_packet+3
+ 074A 0E940000          xcall _UART_Transmit
+ 074E                   .dbline 177
+ 074E           ;     UART_Transmit(packet.adc1L);
+ 074E 00911600          lds R16,_packet+4
+ 0752 0E940000          xcall _UART_Transmit
+ 0756                   .dbline 178
+ 0756           ;       UART_Transmit(packet.adc2H);
+ 0756 00911700          lds R16,_packet+5
+ 075A 0E940000          xcall _UART_Transmit
+ 075E                   .dbline 179
+ 075E           ;     UART_Transmit(packet.adc2L);
+ 075E 00911800          lds R16,_packet+6
+ 0762 0E940000          xcall _UART_Transmit
+ 0766                   .dbline 180
+ 0766           ;       UART_Transmit(packet.adc3H);
+ 0766 00911900          lds R16,_packet+7
+ 076A 0E940000          xcall _UART_Transmit
+ 076E                   .dbline 181
+ 076E           ;     UART_Transmit(packet.adc3L);
+ 076E 00911A00          lds R16,_packet+8
+ 0772 0E940000          xcall _UART_Transmit
+ 0776                   .dbline 183
+ 0776           ;       
+ 0776           ;       UART_Transmit(packet.LH);
+ 0776 00912300          lds R16,_packet+17
+ 077A 0E940000          xcall _UART_Transmit
+ 077E                   .dbline 184
+ 077E           ;     UART_Transmit(packet.LL);
+ 077E 00912400          lds R16,_packet+18
+ 0782 0E940000          xcall _UART_Transmit
+ 0786                   .dbline 185
+ 0786           ;       UART_Transmit(packet.QH);
+ 0786 00912500          lds R16,_packet+19
+ 078A 0E940000          xcall _UART_Transmit
+ 078E                   .dbline 186
+ 078E           ;     UART_Transmit(packet.QL);
+ 078E 00912600          lds R16,_packet+20
+ 0792 0E940000          xcall _UART_Transmit
+ 0796                   .dbline 188
+ 0796           ;       
+ 0796           ;       UART_Transmit(packet.adc00H);
+ 0796 00911B00          lds R16,_packet+9
+ 079A 0E940000          xcall _UART_Transmit
+ 079E                   .dbline 189
+ 079E           ;     UART_Transmit(packet.adc00L);
+ 079E 00911C00          lds R16,_packet+10
+ 07A2 0E940000          xcall _UART_Transmit
+ 07A6                   .dbline 190
+ 07A6           ;     UART_Transmit(packet.adc10H);
+ 07A6 00911D00          lds R16,_packet+11
+ 07AA 0E940000          xcall _UART_Transmit
+ 07AE                   .dbline 191
+ 07AE           ;     UART_Transmit(packet.adc10L);
+ 07AE 00911E00          lds R16,_packet+12
+ 07B2 0E940000          xcall _UART_Transmit
+ 07B6                   .dbline 192
+ 07B6           ;       UART_Transmit(packet.adc20H);
+ 07B6 00911F00          lds R16,_packet+13
+ 07BA 0E940000          xcall _UART_Transmit
+ 07BE                   .dbline 193
+ 07BE           ;     UART_Transmit(packet.adc20L);
+ 07BE 00912000          lds R16,_packet+14
+ 07C2 0E940000          xcall _UART_Transmit
+ 07C6                   .dbline 194
+ 07C6           ;       UART_Transmit(packet.adc30H);
+ 07C6 00912100          lds R16,_packet+15
+ 07CA 0E940000          xcall _UART_Transmit
+ 07CE                   .dbline 195
+ 07CE           ;     UART_Transmit(packet.adc30L);
+ 07CE 00912200          lds R16,_packet+16
+ 07D2 0E940000          xcall _UART_Transmit
+ 07D6                   .dbline 198
+ 07D6           ;     
+ 07D6           ;     // 发送帧尾
+ 07D6           ;     UART_Transmit(packet.footer);
+ 07D6 00912700          lds R16,_packet+21
+ 07DA 0E940000          xcall _UART_Transmit
+ 07DE                   .dbline 199
+ 07DE           ;       UART_Transmit(packet.footer);
+ 07DE 00912700          lds R16,_packet+21
+ 07E2 0E940000          xcall _UART_Transmit
+ 07E6                   .dbline 200
+ 07E6           ;       UART_Transmit(packet.footer);
+ 07E6 00912700          lds R16,_packet+21
+ 07EA                   .dbline -2
+ 07EA           L81:
+ 07EA                   .dbline 0 ; func end
+ 07EA 0C940000          xjmp _UART_Transmit
+ 07EE                   .dbend
+                        .area lit(rom, con, rel)
+ 0000           L65:
+ 0000 0000C842          .word 0x0,0x42c8
+ 0004           L64:
+ 0004 6325723F          .word 0x2563,0x3f72
+ 0008           L63:
+ 0008 FF050238          .word 0x5ff,0x3802
+ 000C           L62:
+ 000C BD3786B5          .word 0x37bd,0xb586
+ 0010           L61:
+ 0010 6636C645          .word 0x3666,0x45c6
+ 0014           L60:
+ 0014 00007A44          .word 0x0,0x447a
+ 0018           L59:
+ 0018 00000000          .word 0x0,0x0
+ 001C           L58:
+ 001C 14AF183F          .word 0xaf14,0x3f18
+ 0020           L57:
+ 0020 0000803F          .word 0x0,0x3f80
+ 0024           ; }

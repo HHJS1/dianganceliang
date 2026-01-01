@@ -1,0 +1,55 @@
+#include <iom16v.h>
+//#include <intrinsics.h>
+#include "main.h"
+#include "adc.h"
+
+/* 主函数 */
+int main(void)
+{
+    /* 系统初始化 */
+    System_Init();
+    
+    /* 主循环 */
+    while (1)
+    {
+        System_MainLoop();
+    }
+}
+
+/* 系统初始化函数 */
+void System_Init(void)
+{
+    /* 初始化ADC */
+    ADC_Init();
+    
+    /* 启用全局中断 */
+    __enable_interrupt();
+}
+
+/* 系统主循环函数 */
+void System_MainLoop(void)
+{
+    static unsigned char channel_counter = 0;
+    unsigned int adc_value;
+    
+    /* 循环读取四个通道的ADC值 */
+    adc_value = ADC_GetValue(channel_counter);
+    
+    /* 这里可以添加对ADC值的处理逻辑 */
+    /* 例如：显示、控制等 */
+    
+    /* 切换到下一个通道 */
+    channel_counter++;
+    if (channel_counter > 3)
+    {
+        channel_counter = 0;
+    }
+    
+    /* 短暂延时，控制采样率 */
+    /* 使用简单的循环延时，因为IAR的_delay_ms可能需要特定的头文件 */
+    {
+        volatile unsigned int i, j;
+        for (i = 0; i < 1000; i++)
+            for (j = 0; j < 10; j++);
+    }
+}

@@ -1,0 +1,22 @@
+#ifndef ADC_H
+#define ADC_H
+
+#include <iom16v.h>
+#include <stdio.h>
+
+// ADC初始化
+void ADC_Init(void);
+
+// 启动连续转换
+void ADC_StartContinuousConversion(void);
+
+// 读取指定通道的ADC值（10位）
+unsigned int ADC_ReadChannel(unsigned char channel);
+
+// 停止连续转换
+void ADC_StopContinuousConversion(void);
+
+// 将ADC值转换为电压值（单位：V）
+float ADC_ToVoltage(unsigned int adc_value);
+
+#endif /* ADC_H */

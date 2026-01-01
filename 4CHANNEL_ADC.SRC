@@ -1,0 +1,11 @@
+[Files]
+source\adc.c
+source\main.c
+source\uart.c
+source\keys.c
+[Headers]
+include\adc.h
+include\main.h
+include\uart.h
+include\keys.h
+[Documents]

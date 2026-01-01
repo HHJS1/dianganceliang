@@ -1,0 +1,48 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+#include <iom16v.h>  // ICC AVR使用iom16.h
+#include <macros.h>  // 包含一些宏定义
+
+#define Ai 30000/503
+#define Rs 100 
+
+
+
+
+// 数据包结构
+typedef struct {
+    unsigned char header;     // 帧头 0x55
+    unsigned char adc0H;       // ADC通道0数据
+	unsigned char adc0L;
+	unsigned char adc1H;       // ADC通道1数据
+	unsigned char adc1L;
+	unsigned char adc2H;       // ADC通道2数据
+	unsigned char adc2L;
+	unsigned char adc3H;        // ADC通道3数据
+	unsigned char adc3L;
+	unsigned char LH;       //电感值
+	unsigned char LL;
+	unsigned char QH;        //Q值
+	unsigned char QL;
+       
+    unsigned char footer;     // 帧尾 0xFF
+} DataPacket;
+
+
+// 函数声明
+void System_Init(void);
+void Process_ADC_Data(void);
+void Send_Data_Packet(void);
+void Delay_ms(unsigned int ms);  // 自定义延时函数
+
+unsigned int L_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ire,unsigned int Iim,unsigned int Ure0,unsigned int Uim0,unsigned int Ire0,unsigned int Iim0);
+unsigned int Q_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ire,unsigned int Iim,unsigned int Ure0,unsigned int Uim0,unsigned int Ire0,unsigned int Iim0);
+unsigned int get_Q_val(void);
+unsigned int get_L_val(void);
+
+// 全局变量
+extern volatile unsigned int ADC_Values[4];
+extern volatile unsigned char ADC_Ready;
+
+#endif /* MAIN_H */

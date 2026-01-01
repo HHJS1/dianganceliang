@@ -1,0 +1,53 @@
+#include <iom16v.h>
+#include "adc.h"
+
+/* ADC初始化函数 */
+void ADC_Init(void)
+{
+    /* 设置参考电压为AVcc，数据右对齐 */
+    ADMUX = (1 << REFS0);
+    
+    /* 使能ADC，设置预分频为128（16MHz/128 = 125kHz） */
+    /* ADC时钟应在50-200kHz之间以获得最佳精度 */
+    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+    
+    /* 禁用数字输入缓冲器以减少功耗（仅对ADC0-ADC3） */
+    //DIDR = (1 << ADC0D) | (1 << ADC1D) | (1 << ADC2D) | (1 << ADC3D);
+}
+
+/* 获取指定通道的ADC值（单次转换） */
+unsigned int ADC_GetValue(unsigned char channel)
+{
+    unsigned int result;
+    
+    /* 确保通道号在0-3范围内 */
+    channel &= 0x03;
+    
+    /* 设置ADC通道 */
+    ADMUX = (ADMUX & 0xF0) | channel;
+    
+    /* 启动转换 */
+    ADCSRA |= (1 << ADSC);
+    
+    /* 等待转换完成 */
+    while (!(ADCSRA & (1 << ADIF)));
+    
+    /* 清除转换完成标志 */
+    ADCSRA |= (1 << ADIF);
+    
+    /* 读取结果 */
+    result = ADC;
+    
+    return result;
+}
+
+/* 连续采样四个通道并存储结果 */
+void ADC_ReadAllChannels(unsigned int *results)
+{
+    unsigned char i;
+    
+    for (i = 0; i < 4; i++)
+    {
+        results[i] = ADC_GetValue(i);
+    }
+}

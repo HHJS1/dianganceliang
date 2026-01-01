@@ -1,0 +1,22 @@
+#ifndef UART_H
+#define UART_H
+
+#include <avr/io.h>
+#include <stdint.h>
+
+// 串口初始化
+void UART_Init(void);
+
+// 发送一个字节
+void UART_Transmit(uint8_t data);
+
+// 接收一个字节（非阻塞）
+uint8_t UART_Receive(void);
+
+// 检查是否接收到数据
+uint8_t UART_DataAvailable(void);
+
+// 发送字符串
+void UART_TransmitString(const char* str);
+
+#endif /* UART_H */

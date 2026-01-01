@@ -1,0 +1,95 @@
+#include <iom16.h>
+#include <intrinsics.h>
+#include "adc.h"
+
+/* 全局变量用于存储ADC值 */
+volatile unsigned int adc_values[4];
+volatile unsigned char adc_channel_index = 0;
+
+/* ADC初始化函数 */
+void ADC_Init(void)
+{
+    /* 设置参考电压为AVcc，数据右对齐 */
+    ADMUX = (1 << REFS0);
+    
+    /* 使能ADC，设置预分频为128（16MHz/128 = 125kHz） */
+    /* ADC时钟应在50-200kHz之间以获得最佳精度 */
+    ADCSRA = (1 << ADEN) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
+    
+    /* 禁用数字输入缓冲器以减少功耗（仅对ADC0-ADC3） */
+    DIDR = (1 << ADC0D) | (1 << ADC1D) | (1 << ADC2D) | (1 << ADC3D);
+}
+
+/* 启动ADC转换 */
+void ADC_StartConversion(unsigned char channel)
+{
+    /* 确保通道号在0-3范围内 */
+    channel &= 0x03;
+    
+    /* 设置ADC通道 */
+    ADMUX = (ADMUX & 0xF0) | channel;
+    
+    /* 启动转换 */
+    ADCSRA |= (1 << ADSC);
+}
+
+/* 读取ADC转换结果 */
+unsigned int ADC_Read(void)
+{
+    /* 等待转换完成 */
+    while (!(ADCSRA & (1 << ADIF)));
+    
+    /* 清除转换完成标志 */
+    ADCSRA |= (1 << ADIF);
+    
+    /* 返回ADC值 */
+    return ADC;
+}
+
+/* 获取指定通道的ADC值（单次转换） */
+unsigned int ADC_GetValue(unsigned char channel)
+{
+    unsigned int result;
+    
+    /* 确保通道号在0-3范围内 */
+    channel &= 0x03;
+    
+    /* 启动转换 */
+    ADC_StartConversion(channel);
+    
+    /* 等待并读取结果 */
+    result = ADC_Read();
+    
+    return result;
+}
+
+/* 连续读取指定通道的ADC值 */
+unsigned int ADC_ReadChannel(unsigned char channel)
+{
+    /* 确保通道号在0-3范围内 */
+    channel &= 0x03;
+    
+    /* 返回对应通道的ADC值 */
+    return adc_values[channel];
+}
+
+/* ADC中断服务程序 - 用于连续采样 */
+#pragma vector = ADC_vect
+__interrupt void ADC_ISR(void)
+{
+    /* 存储当前通道的ADC值 */
+    adc_values[adc_channel_index] = ADC;
+    
+    /* 切换到下一个通道 */
+    adc_channel_index++;
+    if (adc_channel_index > 3)
+    {
+        adc_channel_index = 0;
+    }
+    
+    /* 设置下一个通道并启动转换 */
+    ADMUX = (ADMUX & 0xF0) | adc_channel_index;
+    
+    /* 启动下一次转换 */
+    ADCSRA |= (1 << ADSC);
+}

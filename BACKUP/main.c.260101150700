@@ -1,0 +1,153 @@
+#include "main.h"
+#include "uart.h"
+#include "adc.h"
+
+// 全局变量定义
+#pragma data:data  // 将变量放在数据段
+volatile unsigned int ADC_Values[4] = {0};
+volatile unsigned char ADC_Ready = 0;
+DataPacket packet = {0x55, 0,0,0,0,0, 0, 0, 0,0,0,0,0, 0xFF};
+#pragma data:data
+
+// 简单的延时函数
+void Delay_ms(unsigned int ms) {
+    unsigned int i, j;
+    for(i = 0; i < ms; i++) {
+        for(j = 0; j < 1140; j++) {  // 16MHz时钟下的粗略延时
+            asm("nop");
+        }
+    }
+}
+
+
+void GPIO_Init(void) {
+    // 将PD7设置为输出模式，其他位不变
+    DDRD |= (1 << PD7);
+    
+    // 将PD7初始化为低电平
+    PORTD &= (1 << PD7);
+}
+
+
+
+int main(void) {
+    // 系统初始化
+    System_Init();
+    
+    // 启动ADC连续采样
+    ADC_StartContinuousConversion();
+    GPIO_Init();
+    while(1) {
+        // 处理ADC数据
+        Process_ADC_Data();
+        
+        // 发送数据包
+        Send_Data_Packet();
+        
+        // 延时，控制发送速率（约10Hz）
+        Delay_ms(100);
+    }
+}
+
+void System_Init(void) {
+    // 初始化串口
+    UART_Init();
+    
+    // 初始化ADC
+    ADC_Init();
+    
+    // 全局中断使能
+    asm("sei");
+}
+
+void Process_ADC_Data(void) {
+    if(ADC_Ready) {
+        
+        packet.adc0H = (unsigned int)(ADC_ToVoltage(ADC_Values[0]))>>8;   //Iim
+        packet.adc0L = (unsigned char)(ADC_ToVoltage(ADC_Values[0]));
+        packet.adc1H = (unsigned int)(ADC_ToVoltage(ADC_Values[1]))>>8;	  //Ire
+        packet.adc1L = (unsigned char)(ADC_ToVoltage(ADC_Values[1]));
+		packet.adc2H = (unsigned int)(ADC_ToVoltage(ADC_Values[2]))>>8;	  //Uim
+        packet.adc2L = (unsigned char)(ADC_ToVoltage(ADC_Values[2]));
+        packet.adc3H = (unsigned int)(ADC_ToVoltage(ADC_Values[3]))>>8;	  //Ure
+        packet.adc3L = (unsigned char)(ADC_ToVoltage(ADC_Values[3]));
+        
+		packet.LH = (unsigned int)get_L_val()>>8;   //Iim
+        packet.LL = (unsigned char)get_L_val();
+        packet.QH = (unsigned int)get_Q_val()>>8;	  //Ire
+        packet.QL = (unsigned char)get_Q_val();
+		
+		
+        ADC_Ready = 0;
+    }
+}
+
+unsigned int L_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ire,unsigned int Iim,unsigned int Ure0,unsigned int Uim0,unsigned int Ire0,unsigned int Iim0)
+{
+ 	  unsigned int a=Ure-Ure0;
+	  unsigned int b=Uim-Uim0;
+	  unsigned int c=Ire-Ire0;
+	  unsigned int d=Iim-Iim0;
+	  float k=Ai/Rs;
+	  float Q=0;
+	  float L=0;
+	  //Q=(b*c-a*d)/(a*c+b*d);
+	  L=(b*c-a*d)/(c*c+d*d)*k/(2*3.14*);
+	  
+	  return L*100;
+}
+
+
+
+unsigned int Q_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ire,unsigned int Iim,unsigned int Ure0,unsigned int Uim0,unsigned int Ire0,unsigned int Iim0)
+{
+ 	  unsigned int a=Ure-Ure0;
+	  unsigned int b=Uim-Uim0;
+	  unsigned int c=Ire-Ire0;
+	  unsigned int d=Iim-Iim0;
+	  float k=300/503;
+	  float Q=0;
+	  Q=(b*c-a*d)/(a*c+b*d);
+	  //L=(b*c-a*d)/(c*c+d*d)*k/(2*3.14*1000);
+	  
+	  return (unsigned int)(Q*100);
+}
+
+unsigned int get_L_val(void)
+{		 
+    unsigned int L;
+    L=L_Val_Calculation(ADC_Values[3],ADC_Values[2],ADC_Values[1],ADC_Values[0],100,100,100,100);
+    return L;
+}
+
+unsigned int get_Q_val(void)
+{
+    unsigned int Q;
+    Q=Q_Val_Calculation(ADC_Values[3],ADC_Values[2],ADC_Values[1],ADC_Values[0],100,100,100,100);
+    return Q;
+}
+
+void Send_Data_Packet(void) {
+    // 发送帧头
+    UART_Transmit(packet.header);
+    
+    // 发送ADC数据
+    UART_Transmit(packet.adc0H);
+    UART_Transmit(packet.adc0L);
+    UART_Transmit(packet.adc1H);
+    UART_Transmit(packet.adc1L);
+	UART_Transmit(packet.adc2H);
+    UART_Transmit(packet.adc2L);
+	UART_Transmit(packet.adc3H);
+    UART_Transmit(packet.adc3L);
+	
+	UART_Transmit(packet.LH);
+    UART_Transmit(packet.LL);
+	UART_Transmit(packet.QH);
+    UART_Transmit(packet.QL);
+    
+    // 发送帧尾
+    UART_Transmit(packet.footer);
+	UART_Transmit(packet.footer);
+	UART_Transmit(packet.footer);
+}

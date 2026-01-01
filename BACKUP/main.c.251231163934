@@ -1,0 +1,67 @@
+#include <iom16v.h>
+#include "main.h"
+#include "adc.h"
+#include "uart.h"
+
+unsigned int adc_val[4]={0};
+
+/* 延时函数 - 简单的循环延时 */
+void delay_ms(unsigned int ms)
+{
+    unsigned int i, j;
+    for (i = 0; i < ms; i++)
+    {
+        for (j = 0; j < 1140; j++)  /* 调整这个值以校准延时 */
+        {
+            asm("nop");
+        }
+    }
+}
+
+/* 主函数 */
+void main(void)
+{
+    /* 系统初始化 */
+    System_Init();
+    
+    /* 主循环 */
+    while (1)
+    {
+        System_MainLoop();
+    }
+}
+
+/* 系统初始化函数 */
+void System_Init(void)
+{
+    /* 初始化ADC */
+	UART_Init(9600);
+    ADC_Init();
+}
+
+/* 系统主循环函数 */
+void System_MainLoop(void)
+{
+    static unsigned char channel_counter = 0;
+    unsigned int adc_value;
+    
+    /* 循环读取四个通道的ADC值 */
+    //adc_value = ADC_GetValue(channel_counter);
+    
+    /* 这里可以添加对ADC值的处理逻辑 */
+	
+	ADC_ReadAllChannels(adc_val);
+    /* 例如：显示、控制等 */
+    
+    /* 切换到下一个通道 */
+	/*
+    channel_counter++;
+    if (channel_counter > 3)
+    {
+        channel_counter = 0;
+    }
+    */
+    /* 短暂延时，控制采样率 */
+	UART_Process(adc_val);
+    delay_ms(10);
+}

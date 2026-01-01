@@ -1,0 +1,38 @@
+#ifndef UART_H
+#define UART_H
+
+#include <iom16v.h>
+#include "main.h"
+
+/* 设备ID定义 */
+#define DEVICE_ID 0x01
+
+/* 帧格式定义 */
+#define FRAME_HEADER_1 0xAA
+#define FRAME_HEADER_2 0x55
+#define FRAME_END 0x0D  /* 回车符作为帧结束 */
+
+/* 测量范围定义 */
+#define FREQ_MIN 0      /* 频率最小值 0Hz */
+#define FREQ_MAX 5000   /* 频率最大值 5000Hz */
+#define TEMP_MIN -400   /* 温度最小值 -40.0℃ * 10 = -400 */
+#define TEMP_MAX 1400   /* 温度最大值 140.0℃ * 10 = 1400 */
+#define LIGHT_MIN 0     /* 光强电压最小值 0mV */
+#define LIGHT_MAX 3000  /* 光强电压最大值 3000mV */
+
+/* 函数声明 */
+void UART_Init(unsigned long baud_rate);
+void UART_TransmitByte(unsigned char data);
+unsigned char UART_ReceiveByte(void);
+void UART_TransmitString(const char *str);
+void UART_SendFrame(unsigned int frequency, int temperature, unsigned int light_voltage);
+void UART_Process(void);
+
+/* 数据处理函数 */
+int TemperatureToInt(float temp_celsius);
+float IntToTemperature(int temp_int);
+unsigned int LimitFrequency(unsigned int freq);
+int LimitTemperature(int temp_int);
+unsigned int LimitLightVoltage(unsigned int light_mv);
+
+#endif

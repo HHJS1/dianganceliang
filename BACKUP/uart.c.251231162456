@@ -1,0 +1,158 @@
+#include "uart.h"
+#include "main.h"
+
+
+/* 全局变量定义 */
+volatile unsigned char uart_tx_busy = 0;
+volatile unsigned char uart_rx_buffer[32];
+volatile unsigned char uart_rx_index = 0;
+
+/* UART初始化 */
+void UART_Init(unsigned long baud_rate)
+{
+    unsigned int ubrr_value;
+    
+    /* 计算波特率设置值 */
+    ubrr_value = (unsigned long)(16000000UL / (16UL * baud_rate)) - 1;
+    
+    /* 设置波特率寄存器 */
+    UBRRL = (unsigned char)ubrr_value;
+    UBRRH = (unsigned char)(ubrr_value >> 8);
+    
+    /* 使能接收器和发送器 */
+    UCSRB = (1 << RXEN) | (1 << TXEN);
+    
+    /* 设置帧格式：8数据位，1停止位，无校验 */
+    UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);
+    
+    /* 初始化接收缓冲区 */
+    uart_rx_index = 0;
+    uart_tx_busy = 0;
+}
+
+/* 发送一个字节 */
+void UART_TransmitByte(unsigned char data)
+{
+    /* 等待发送缓冲区为空 */
+    while (!(UCSRA & (1 << UDRE)))
+    {
+        /* 空循环等待 */
+    }
+    
+    /* 放入数据，启动发送 */
+    UDR = data;
+}
+
+/* 接收一个字节（非阻塞） */
+unsigned char UART_ReceiveByte(void)
+{
+    /* 检查是否有数据接收完成 */
+    if (UCSRA & (1 << RXC))
+    {
+        return UDR;
+    }
+    return 0xFF;  /* 无数据 */
+}
+
+/* 发送字符串 */
+void UART_TransmitString(const char *str)
+{
+    while (*str)
+    {
+        UART_TransmitByte(*str);
+        str++;
+    }
+}
+
+/* 发送16位整数（分高低字节发送） */
+void UART_SendUint16(unsigned int value)
+{
+    UART_TransmitByte((unsigned char)(value >> 8));  /* 高字节 */
+    UART_TransmitByte((unsigned char)(value & 0xFF));  /* 低字节 */
+}
+
+/* 发送有符号16位整数（分高低字节发送） */
+void UART_SendInt16(int value)
+{
+    UART_TransmitByte((unsigned char)(value >> 8));  /* 高字节 */
+    UART_TransmitByte((unsigned char)(value & 0xFF));  /* 低字节 */
+}
+
+uint16_t L_val_Calculation()
+{
+ 		 
+ 
+}
+
+
+
+
+
+
+/* 发送数据帧（新格式） */
+void UART_SendFrame(unsigned int L_val, unsigned int Q_val)
+{
+ 	UART_TransmitByte(FRAME_HEADER);
+   
+   								
+    
+    /* 帧结束符（可选） */
+    UART_TransmitByte(FRAME_END);
+}
+
+void UART_SendFrame_adc(unsigned int *ADC_val)
+{
+
+ 	UART_TransmitByte(FRAME_HEADER);
+   	UART_TransmitByte((unsigned char)ADC_val[0]*10);
+	UART_TransmitByte((unsigned char)ADC_val[1]*10);
+	UART_TransmitByte((unsigned char)ADC_val[2]*10);
+	UART_TransmitByte((unsigned char)ADC_val[3]*10);
+   								
+    UART_TransmitByte(FRAME_END);
+	UART_TransmitByte(FRAME_END);
+	UART_TransmitByte(FRAME_END);
+}
+
+/* 发送无符号整数作为字符串 */
+void UART_SendUintAsString(unsigned int value)
+{
+    char buffer[6];
+    unsigned char i = 0;
+    unsigned char j;
+    
+    /* 处理0特殊情况 */
+    if (value == 0)
+    {
+        UART_TransmitByte('0');
+        return;
+    }
+    
+    /* 转换数字为字符串（逆序） */
+    while (value > 0)
+    {
+        buffer[i++] = '0' + (value % 10);
+        value /= 10;
+    }
+    
+    /* 反转字符串并发送 */
+    for (j = i; j > 0; j--)
+    {
+        UART_TransmitByte(buffer[j-1]);
+    }
+}
+
+/* UART处理函数（定时调用） */
+void UART_Process(unsigned int *val)
+{
+    uint16_t uart_counter=0;
+    /* 每500ms发送一次数据帧 */
+    uart_counter++;
+    if (uart_counter >= 500)
+    {
+        uart_counter = 0;
+        
+        /* 发送二进制格式数据帧 */
+        UART_SendFrame_adc(val);
+    }
+}

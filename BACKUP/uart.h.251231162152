@@ -1,0 +1,23 @@
+#ifndef UART_H
+#define UART_H
+
+#include <iom16v.h>
+#include "main.h"
+
+
+/* 帧格式定义 */
+#define FRAME_HEADER 0x55
+#define FRAME_END 0xff  /* 回车符作为帧结束 */
+
+
+/* 函数声明 */
+void UART_Init(unsigned long baud_rate);
+void UART_TransmitByte(unsigned char data);
+unsigned char UART_ReceiveByte(void);
+void UART_TransmitString(const char *str);
+void UART_SendFrame(unsigned int L_val, unsigned int Q_val);
+void UART_SendFrame_adc(unsigned int *ADC_val);
+void UART_Process(unsigned int *val);
+
+
+#endif
