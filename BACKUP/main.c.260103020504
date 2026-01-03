@@ -160,26 +160,21 @@ unsigned int Q_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ir
 	  //Q=(b*c-a*d)/(a*c+b*d);
 	  R = (a*c+b*d)/(c*c+d*d)*k;
 	  R = -2.600288*R*R+0.916240*R;
+	  if(R>20)
+	  {
+	   	R = 22.62690343*R-1.20359756;
+	  
+	  }
+	  
+	  
 	  
 	  X = (b*c-a*d)/(c*c+d*d)*k;
 	  X = 0.939445*X+0.003161;
 	 
 	  Q=X*1.f/R*1.f;
-	  
-	  if(Q>15)
-	  {
-	  
-	   	R = 22.62690343*(a*c+b*d)/(c*c+d*d)*k-1.20359756;
-	  	Q=X*1.f/R*1.f;
-		 return Q*100;
-	  }
-	  else
-	  {
-	   return Q*100;
-	  }
 	  //L=(b*c-a*d)/(c*c+d*d)*k/(2*3.14*1000);
 	  
-	  
+	  return Q*100;
 }
 
 unsigned int get_L_val(void)

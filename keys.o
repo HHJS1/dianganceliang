@@ -10,7 +10,7 @@ S _Key_Flags Ref0000
 S _ADC_Values Ref0000
 A text size 426 flags 0
 dbfile source\keys.c
-dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\keys.c
 dbfunc e Keys_Init 0 fV
 dbline FFFFFFFF 0
 dbline 10 0
@@ -157,7 +157,7 @@ S _Keys_Scan Def000A
 S _Keys_Init Def0000
 A data size 18 flags 20
 dbfile source\keys.c
-dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\keys.c
 dbsym s key_open_debounce 0 c
 dbsym s key_short_debounce 1 c
 dbsym s key_clear_debounce 2 c
@@ -165,7 +165,7 @@ dbsym e sum 3 A[8:4]i
 dbsym e ADC_buf B A[8:4]i
 dbsym e i 13 c
 dbsym e j 14 c
-dbfile F:\daima\AVR\ATmega16\4channl_adc\source\keys.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\keys.c
 dbsym s key_start_last 17 c
 dbsym s key_short_last 16 c
 dbsym s key_open_last 15 c

@@ -1,6 +1,6 @@
 CC = iccavr
 LIB = ilibw
-CFLAGS =  -IF:\daima\AVR\ATmega16\4channl_adc\include -IF:\iccv7avr\include -IF:\AVR_GCC\avr8-gnu-toolchain-win32_x86_64\include -e -D__ICC_VERSION=722 -DATMega16  -l -g -MLongJump -MHasMul -MEnhanced 
+CFLAGS =  -IF:\daima\AVR\ATmega16\4channl_adc\dianganceliang\include -IF:\iccv7avr\include -e -D__ICC_VERSION=722 -DATMega16  -l -g -MLongJump -MHasMul -MEnhanced 
 ASFLAGS = $(CFLAGS) 
 LFLAGS =  -LF:\iccv7avr\lib -g -e:0x4000 -ucrtatmega.o -bfunc_lit:0x54.0x4000 -dram_end:0x45f -bdata:0x60.0x45f -dhwstk_size:30 -beeprom:0.512 -fihx_coff -S2
 FILES = adc.o main.o uart.o keys.o 

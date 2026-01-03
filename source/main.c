@@ -3,6 +3,7 @@
 #include "adc.h"
 #include "keys.h"
 
+
 // 全局变量定义
 #pragma data:data  // 将变量放在数据段
 volatile unsigned int ADC_Values[4] = {0};
@@ -128,11 +129,19 @@ unsigned int L_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ir
 	  float c=1.f*Ire-Ire0;
 	  float d=1.f*Iim-Iim0;
 	  float k=300.0f/503;
-	  float Q=0;
-	  float L=0;
+	  float Q=0.f;
+	  float L=0.f;
+	  float R=0.f;
+	  float X=0.f;
 	  //Q=(b*c-a*d)/(a*c+b*d);
-	  L=(b*c-a*d)*1000.f/(c*c+d*d)*k*1000.f/(2*3.14*1010.f);
-	  L=-0.000001*L*L*L+0.000031*L*L+0.945883*L;
+	 
+	  //R = (a*c+b*d)/(c*c+d*d);
+	  //R = 169.230975*R*R*R-30.520493*R*R+2.357366*R;
+	  X = (b*c-a*d)/(c*c+d*d)*k;
+	  X = 0.939445*X+0.003161;
+	  
+	  L = X*1000.f*1000.f/(2*3.1415*1010.f);
+	 
 	  return L*100;
 }
 
@@ -144,12 +153,25 @@ unsigned int Q_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ir
 	  float b=1.f*Uim-Uim0;
 	  float c=1.f*Ire-Ire0;
 	  float d=1.f*Iim-Iim0;
-	  // float k=1.f*300/503;
-	  float Q=0;
-	  Q=1.f*(b*c-a*d)/(a*c+b*d);
+	   float k=1.f*300/503;
+	  float Q=0.f;
+	  float R=0.f;
+	  float X=0.f;
+	  //Q=(b*c-a*d)/(a*c+b*d);
+	  R = (a*c+b*d)/(c*c+d*d)*k;
+	  R = -2.600288*R*R+0.916240*R;
+	  
+	  X = (b*c-a*d)/(c*c+d*d)*k;
+	  X = 0.939445*X+0.003161;
+	 
+	  Q=X*1.f/R*1.f;
+	  
+	 
+	  return Q*100;
+	  
 	  //L=(b*c-a*d)/(c*c+d*d)*k/(2*3.14*1000);
 	  
-	  return Q*100;
+	  
 }
 
 unsigned int get_L_val(void)

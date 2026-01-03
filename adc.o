@@ -10,7 +10,7 @@ S fpmule2 Ref0000
 S uint2fp Ref0000
 A text size AA flags 0
 dbfile source\adc.c
-dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\adc.c
 dbfunc e ADC_Init 0 fV
 dbline FFFFFFFF 0
 dbline 7 0
@@ -64,7 +64,7 @@ S _ADC_ReadChannel Def0022
 S _ADC_StartContinuousConversion Def000A
 A data size 1 flags 20
 dbfile source\adc.c
-dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\adc.c
 dbsym s current_channel 0 c
 A idata size 1 flags 0
 A lit size C flags 0

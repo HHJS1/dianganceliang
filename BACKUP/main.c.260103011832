@@ -137,8 +137,8 @@ unsigned int L_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ir
 	 
 	  //R = (a*c+b*d)/(c*c+d*d);
 	  //R = 169.230975*R*R*R-30.520493*R*R+2.357366*R;
-	  X = (b*c-a*d)/(c*c+d*d)*k;
-	  X = 0.939445*X+0.003161;
+	  X = (b*c-a*d)/(c*c+d*d);
+	  X = 0.939445*X+0.0053;
 	  
 	  L = X*1000.f*1000.f/(2*3.1415*1010.f);
 	 
@@ -158,28 +158,15 @@ unsigned int Q_Val_Calculation(unsigned int Ure,unsigned int Uim,unsigned int Ir
 	  float R=0.f;
 	  float X=0.f;
 	  //Q=(b*c-a*d)/(a*c+b*d);
-	  R = (a*c+b*d)/(c*c+d*d)*k;
-	  R = -2.600288*R*R+0.916240*R;
-	  
-	  X = (b*c-a*d)/(c*c+d*d)*k;
-	  X = 0.939445*X+0.003161;
+	  R = (a*c+b*d)/(c*c+d*d);
+	  R = 169.230975*R*R*R-30.520493*R*R+2.357366*R;
+	  X = (b*c-a*d)/(c*c+d*d);
+	  X = 0.939445*X+0.0053;
 	 
-	  Q=X*1.f/R*1.f;
-	  
-	  if(Q>15)
-	  {
-	  
-	   	R = 22.62690343*(a*c+b*d)/(c*c+d*d)*k-1.20359756;
-	  	Q=X*1.f/R*1.f;
-		 return Q*100;
-	  }
-	  else
-	  {
-	   return Q*100;
-	  }
+	  Q=X*k*1.f/R*1.f;
 	  //L=(b*c-a*d)/(c*c+d*d)*k/(2*3.14*1000);
 	  
-	  
+	  return Q*100;
 }
 
 unsigned int get_L_val(void)

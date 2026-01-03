@@ -3,7 +3,7 @@ H 1 areas 5 global symbols
 M uart.c
 A text size 46 flags 0
 dbfile source\uart.c
-dbfile F:\daima\AVR\ATmega16\4channl_adc\source\uart.c
+dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\uart.c
 dbfunc e UART_Init 0 fV
 dbline FFFFFFFF 0
 dbline 6 0

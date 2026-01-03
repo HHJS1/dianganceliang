@@ -9,10 +9,10 @@
  0000 00                .byte 0
                         .area data(ram, con, rel)
  0001                   .dbfile source\adc.c
- 0001                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+ 0001                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\adc.c
  0001                   .dbsym s current_channel _current_channel c
                         .area text(rom, con, rel)
- 0000                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\source\adc.c
+ 0000                   .dbfile F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\source\adc.c
  0000                   .dbfunc e ADC_Init _ADC_Init fV
                         .even
  0000           _ADC_Init::

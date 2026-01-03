@@ -1,5 +1,5 @@
 [Compiler Options]
-Edit1=F:\daima\AVR\ATmega16\4channl_adc\include;F:\iccv7avr\include;F:\AVR_GCC\avr8-gnu-toolchain-win32_x86_64\include
+Edit1=F:\daima\AVR\ATmega16\4channl_adc\dianganceliang\include;F:\iccv7avr\include
 Edit2=F:\iccv7avr\lib
 Edit8=
 CheckBox1=0
